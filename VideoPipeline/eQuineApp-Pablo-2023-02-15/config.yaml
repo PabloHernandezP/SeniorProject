@@ -13,10 +13,32 @@ video_sets:
   C:\Users\14074\OneDrive\Desktop\CIS4914\SeniorProject\VideoPipeline\RawVideos\C0213.mp4:
     crop: 0, 1920, 0, 1080
 bodyparts:
-- bodypart1
-- bodypart2
-- bodypart3
-- objectA
+- rightFhoof
+- rightHhoof
+- righthock
+- rightFfetlock
+- rightHfetlock
+- rightknee
+- handlerRfoot
+- handlerRknee
+- nostril
+- poll
+- withers
+- midback
+- shoulder
+- elbow
+- croup
+- hip
+- stifle
+- pointofbuttock
+- leftFhoof
+- leftHhoof
+- lefthock
+- leftFfetlock
+- leftHfetlock
+- leftknee
+- handlerLfoot
+- handlerLknee
 
     # Fraction of video to start/stop when extracting frames for labeling/refinement
 start: 0
@@ -25,20 +47,72 @@ numframes2pick: 20
 
     # Plotting configuration
 skeleton:
-- - bodypart1
-  - bodypart2
-- - objectA
-  - bodypart3
-skeleton_color: black
+- - nostril
+  - poll
+- - poll
+  - withers
+- - withers
+  - shoulder
+- - shoulder
+  - elbow
+- - withers
+  - midback
+- - midback
+  - croup
+- - croup
+  - hip
+- - croup
+  - dock
+- - hip
+  - stifle
+- - hip
+  - pointofbuttock
+- - pointofbuttock
+  - croup
+- - pointofbuttock
+  - stifle
+- - hip
+  - dock
+- - dock
+  - stifle
+- - stifle
+  - righthock
+- - righthock
+  - rightHfetlock
+- - rightHfetlock
+  - rightHhoof
+- - elbow
+  - rightknee
+- - rightknee
+  - rightFfetlock
+- - rightFfetlock
+  - rightFhoof
+- - leftknee
+  - leftFfetlock
+- - leftFfetlock
+  - leftFhoof
+- - lefthock
+  - leftHfetlock
+- - leftHfetlock
+  - leftHhoof
+- - handlerRknee
+  - handlerRfoot
+- - handlerRfoot
+  - handlerLfoot
+- - handlerLfoot
+  - handlerLknee
+- - handlerLknee
+  - handlerRknee
+skeleton_color: blue
 pcutoff: 0.6
-dotsize: 12
+dotsize: 4
 alphavalue: 0.7
-colormap: rainbow
+colormap: jet
 
     # Training,Evaluation and Analysis configuration
 TrainingFraction:
 - 0.95
-iteration: 0
+iteration: 2
 default_net_type: resnet_50
 default_augmenter: default
 snapshotindex: -1
