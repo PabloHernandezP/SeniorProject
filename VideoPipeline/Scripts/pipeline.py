@@ -7,7 +7,7 @@
     where the implementation details are abstracted to places like model.py, angle.py, etc.
 
     Eventually, we should have functions here like "processNewData(...)" and others that can be
-    configured to fire based on events triggered by UI interactions. 
+    configured to automatically fire based on UI events.
 
     This might not be the right approach for the final implementation, but I think something of
     this nature will be useful for maintaining synchronization with the other teams who will/have
