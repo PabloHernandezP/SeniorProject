@@ -56,6 +56,3 @@ def angle(x1, y1, x2, y2):
         
         # Find Angle
         jointangle[i] = np.arctan2(Rotation2[i, 2], Rotation2[i, 3]) - np.arctan
-
-def display():
-    return
