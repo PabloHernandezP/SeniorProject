@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "181903883226",
+    "project_id": "equine-ai",
+    "storage_bucket": "equine-ai.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:181903883226:android:62be5b49601c3a1ed11ee3",
+        "android_client_info": {
+          "package_name": "com.example.equine_ai"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "181903883226-g4i3nh6c1b63bov7s2c0nbti86lsstso.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWE7F3v9RU8Uzr6U9HegFxKc3-qgfXU2E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "181903883226-g4i3nh6c1b63bov7s2c0nbti86lsstso.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
