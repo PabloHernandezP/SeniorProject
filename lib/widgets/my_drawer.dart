@@ -1,4 +1,6 @@
+import 'package:equine_ai/pages/dashboard/dashboard.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({Key? key}) : super(key: key);
@@ -25,6 +27,14 @@ class MyDrawer extends StatelessWidget {
             },
           ),
           ListTile(
+            leading: const Icon(Icons.dashboard),
+            title: const Text('Dashboard'),
+            onTap: () {
+              Navigator.pop(context);
+              Get.to(const Dashboard());
+            },
+          ),
+          ListTile(
             leading: const Icon(Icons.cloud_upload),
             title: const Text('Upload Data'),
             onTap: () {
@@ -33,11 +43,10 @@ class MyDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.dashboard),
-            title: const Text('Dashboard'),
+            leading: Icon(Icons.history),
+            title: Text('History'),
             onTap: () {
-              Navigator.pop(context);
-              // Navigate to user dashboard page
+              // Navigate to the history page
             },
           ),
           ListTile(
