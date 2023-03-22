@@ -1,5 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:equine_ai/pages/dashboard/widgets/dashboard_body.dart';
 import 'package:equine_ai/pages/dashboard/widgets/data_grid.dart';
+import 'package:equine_ai/pages/dashboard/widgets/specifiers.dart';
+import 'package:flutter/material.dart';
 import '../../widgets/my_drawer.dart';
 
 class Dashboard extends StatelessWidget {
@@ -10,7 +12,7 @@ class Dashboard extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text("Dashboard")),
       drawer: const MyDrawer(),
-      body: const DataGrid(),
+      body: const Specifiers(),
     );
   }
 }
