@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
-import 'login_screen.dart';
+import 'pages/login/firebase_options.dart';
+import 'pages/login/login_screen.dart';
 import 'package:get/get.dart';
 
 Future<void> main() async {
@@ -21,7 +21,6 @@ class MyApp extends StatelessWidget {
       home: LoginScreen(),
     );
   }
-
 
   // // This widget is the root of your application.
   // @override

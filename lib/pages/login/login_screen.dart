@@ -1,7 +1,9 @@
-import 'package:equine_ai/success_screen.dart';
+import 'package:equine_ai/widgets/my_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../widgets/my_app_bar.dart';
 import 'authentication.dart';
+import 'success_screen.dart';
 
 TextEditingController? textControllerEmail;
 FocusNode? textFocusNodeEmail;
@@ -74,9 +76,8 @@ class _LoginScreen extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: const Text("Login Page"),
-      ),
+      appBar: AppBar(title: const Text("Login")),
+      drawer: const MyDrawer(),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[

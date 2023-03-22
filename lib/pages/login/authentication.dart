@@ -1,19 +1,17 @@
-import 'package:equine_ai/success_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-
+import 'success_screen.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 final GoogleSignIn googleSignIn = GoogleSignIn(
-  // scopes: [
-  //   'email',
-  //   'https://www.googleapis.com/auth/contacts.readonly',
-  // ],
-);
+    // scopes: [
+    //   'email',
+    //   'https://www.googleapis.com/auth/contacts.readonly',
+    // ],
+    );
 
 String? name;
 String? imageUrl;
@@ -27,14 +25,16 @@ Future<String?> signInWithGoogle() async {
   await Firebase.initializeApp();
 
   final GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
-  final GoogleSignInAuthentication? googleSignInAuthentication = await googleSignInAccount?.authentication;
+  final GoogleSignInAuthentication? googleSignInAuthentication =
+      await googleSignInAccount?.authentication;
 
   final AuthCredential credential = GoogleAuthProvider.credential(
     accessToken: googleSignInAuthentication?.accessToken,
     idToken: googleSignInAuthentication?.idToken,
   );
 
-  final UserCredential userCredential = await _auth.signInWithCredential(credential);
+  final UserCredential userCredential =
+      await _auth.signInWithCredential(credential);
   final User? user = userCredential.user;
 
   if (user != null) {
@@ -83,7 +83,8 @@ Future<String> registerWithEmailPassword(String email, String password) async {
   // Initialize Firebase
   await Firebase.initializeApp();
 
-  final UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+  final UserCredential userCredential =
+      await _auth.createUserWithEmailAndPassword(
     email: email,
     password: password,
   );
@@ -205,30 +206,30 @@ class _GoogleButtonState extends State<GoogleButton> {
           padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
           child: _isProcessing
               ? CircularProgressIndicator(
-            valueColor: new AlwaysStoppedAnimation<Color>(
-              Colors.blueGrey,
-            ),
-          )
-              : Row(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Image(
-                image: AssetImage("assets/google_logo.png"),
-                height: 30.0,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 20),
-                child: Text(
-                  'Continue with Google',
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.blueGrey,
+                  valueColor: new AlwaysStoppedAnimation<Color>(
+                    Colors.blueGrey,
                   ),
+                )
+              : Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Image(
+                      image: AssetImage("assets/google_logo.png"),
+                      height: 30.0,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: Text(
+                        'Continue with Google',
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.blueGrey,
+                        ),
+                      ),
+                    )
+                  ],
                 ),
-              )
-            ],
-          ),
         ),
       ),
     );
