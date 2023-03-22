@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class Specifiers extends StatefulWidget {
-  const Specifiers({super.key});
+class Filters extends StatefulWidget {
+  const Filters({super.key});
 
   @override
-  _SpecifiersState createState() => _SpecifiersState();
+  _FiltersState createState() => _FiltersState();
 }
 
-class _SpecifiersState extends State<Specifiers> {
+class _FiltersState extends State<Filters> {
   String _selectedSpecimen = 'Specimen A';
   String _selectedTimeframe = 'Last 24 Hours';
 
@@ -47,16 +47,19 @@ class _SpecifiersState extends State<Specifiers> {
                       ))
               .toList(),
           style: const TextStyle(
-            color: Colors.black,
+            color: Colors.white,
             fontSize: 16.0,
           ),
           underline: Container(
             height: 2.0,
             color: Colors.blueAccent,
           ),
-          dropdownColor: Colors.white,
+          dropdownColor: Colors.blue,
           icon: const Icon(Icons.arrow_drop_down),
           iconSize: 36.0,
+        ),
+        SizedBox(
+          width: MediaQuery.of(context).size.width / 20,
         ),
         DropdownButton<String>(
           value: _selectedTimeframe,
@@ -73,16 +76,19 @@ class _SpecifiersState extends State<Specifiers> {
                       ))
               .toList(),
           style: const TextStyle(
-            color: Colors.black,
+            color: Colors.white,
             fontSize: 16.0,
           ),
           underline: Container(
             height: 2.0,
             color: Colors.blueAccent,
           ),
-          dropdownColor: Colors.white,
+          dropdownColor: Colors.blue,
           icon: const Icon(Icons.arrow_drop_down),
           iconSize: 36.0,
+        ),
+        SizedBox(
+          width: MediaQuery.of(context).size.width / 20,
         ),
       ],
     );

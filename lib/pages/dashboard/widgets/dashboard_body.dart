@@ -1,5 +1,5 @@
 import 'package:equine_ai/pages/dashboard/widgets/data_grid.dart';
-import 'package:equine_ai/pages/dashboard/widgets/specifiers.dart';
+import 'package:equine_ai/widgets/filters.dart';
 import 'package:flutter/material.dart';
 
 class DashboardBody extends StatelessWidget {
@@ -10,7 +10,7 @@ class DashboardBody extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: const [
-          Specifiers(),
+          Filters(),
           SizedBox(height: 16.0),
           DataGrid(),
         ],

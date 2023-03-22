@@ -43,8 +43,8 @@ class MyDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: Icon(Icons.history),
-            title: Text('History'),
+            leading: const Icon(Icons.history),
+            title: const Text('History'),
             onTap: () {
               // Navigate to the history page
             },
