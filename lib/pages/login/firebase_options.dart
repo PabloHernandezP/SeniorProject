@@ -54,6 +54,7 @@ class DefaultFirebaseOptions {
     authDomain: 'equine-ai.firebaseapp.com',
     storageBucket: 'equine-ai.appspot.com',
     measurementId: 'G-F27GX1XR7P',
+    databaseURL: "https://equine-ai-default-rtdb.firebaseio.com/",
   );
 
   static const FirebaseOptions android = FirebaseOptions(
@@ -62,6 +63,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '181903883226',
     projectId: 'equine-ai',
     storageBucket: 'equine-ai.appspot.com',
+    databaseURL: "https://equine-ai-default-rtdb.firebaseio.com/",
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
@@ -72,5 +74,6 @@ class DefaultFirebaseOptions {
     storageBucket: 'equine-ai.appspot.com',
     iosClientId: '181903883226-bqtdptltc7o4thh5ambjp8kblkpilfjk.apps.googleusercontent.com',
     iosBundleId: 'com.example.equineAi',
+    databaseURL: "https://equine-ai-default-rtdb.firebaseio.com/",
   );
 }

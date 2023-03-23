@@ -4,6 +4,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'success_screen.dart';
+import 'package:get/get.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 final GoogleSignIn googleSignIn = GoogleSignIn(
@@ -19,6 +20,10 @@ String? imageUrl;
 bool? authSignedIn;
 String? uid;
 String? userEmail;
+
+FirebaseAuth getAuthInstance() {
+  return _auth;
+}
 
 Future<String?> signInWithGoogle() async {
   // Initialize Firebase
@@ -63,6 +68,23 @@ Future<String?> signInWithGoogle() async {
 
   return null;
 }
+
+// Future<UserCredential> signInWithGoogle() async {
+//   // Trigger the authentication flow
+//   final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+//
+//   // Obtain the auth details from the request
+//   final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+//
+//   // Create a new credential
+//   final credential = GoogleAuthProvider.credential(
+//     accessToken: googleAuth?.accessToken,
+//     idToken: googleAuth?.idToken,
+//   );
+//
+//   // Once signed in, return the UserCredential
+//   return await FirebaseAuth.instance.signInWithCredential(credential);
+// }
 
 void signOutGoogle() async {
   await googleSignIn.signOut();
@@ -180,15 +202,15 @@ class _GoogleButtonState extends State<GoogleButton> {
             _isProcessing = true;
           });
           await signInWithGoogle().then((result) {
-            //Get.off(SuccessScreen());
-            print(result);
-            Navigator.of(context).pop();
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(
-                fullscreenDialog: true,
-                builder: (context) => SuccessScreen(),
-              ),
-            );
+            Get.off(SuccessScreen());
+            // print(result);
+            // Navigator.of(context).pop();
+            // Navigator.of(context).pushReplacement(
+            //   MaterialPageRoute(
+            //     fullscreenDialog: true,
+            //     builder: (context) => SuccessScreen(),
+            //   ),
+            // );
           }).catchError((error) {
             print('Registration Error: $error');
           });
