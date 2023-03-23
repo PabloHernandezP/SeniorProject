@@ -42,9 +42,9 @@ class _FiltersState extends State<Filters> {
           items: _specimens
               .map<DropdownMenuItem<String>>(
                   (String value) => DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      ))
+                value: value,
+                child: Text(value),
+              ))
               .toList(),
           style: const TextStyle(
             color: Colors.white,
@@ -71,9 +71,9 @@ class _FiltersState extends State<Filters> {
           items: _timeframes
               .map<DropdownMenuItem<String>>(
                   (String value) => DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      ))
+                value: value,
+                child: Text(value),
+              ))
               .toList(),
           style: const TextStyle(
             color: Colors.white,

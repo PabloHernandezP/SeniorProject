@@ -1,5 +1,3 @@
-import 'package:equine_ai/main.dart';
-import 'package:equine_ai/pages/dashboard/widgets/dashboard_body.dart';
 import 'package:equine_ai/pages/dashboard/widgets/data_grid.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/my_app_bar.dart';

@@ -1,4 +1,5 @@
 import 'package:equine_ai/pages/dashboard/dashboard.dart';
+import 'package:equine_ai/pages/upload/upload_data_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -39,7 +40,7 @@ class MyDrawer extends StatelessWidget {
             title: const Text('Upload Data'),
             onTap: () {
               Navigator.pop(context);
-              // Navigate to data upload page
+              Get.to(const UploadDataPage());
             },
           ),
           ListTile(
@@ -50,11 +51,11 @@ class MyDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.settings),
-            title: const Text('Settings'),
+            leading: const Icon(Icons.logout),
+            title: const Text('Log Out'),
             onTap: () {
               Navigator.pop(context);
-              // Navigate to settings page
+              // Navigate to logout page
             },
           ),
         ],
