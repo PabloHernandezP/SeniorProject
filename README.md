@@ -16,5 +16,5 @@ with the dev email
 3. From any directory, run ```dart pub global activate flutterfire_cli```
 4. Make sure all project dependencies are installed
 
-##NOTE: 
+## Note: 
 For Google sign-in to work on localhost, run project with ```flutter run -d chrome --web-port 5555```
