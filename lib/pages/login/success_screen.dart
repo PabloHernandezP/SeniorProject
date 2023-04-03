@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'authentication.dart';
@@ -90,9 +92,22 @@ class _SuccessScreen extends State<SuccessScreen> {
                 final snapshot = await ref.child("users/${getAuthInstance().currentUser!.uid}").get();
                 setState(() {
                   if (snapshot.exists) {
-                    databaseData = snapshot.value.toString();
+                    // stores all children in map. Currently looks like {"text": "user text"}
+                    Map<String, dynamic> data =  snapshot.value as Map<String, dynamic>;
+                    databaseData = data["text"];
+
+                    const snackBar = SnackBar(
+                      content:
+                      Text("Data retrieved!"),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   } else {
                     databaseData = "Unable to retrieve data";
+                    const snackBar = SnackBar(
+                      content:
+                      Text("Unable to retrieve from database, please try again."),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   }
                 });
               },

@@ -113,7 +113,7 @@ class _LoginScreen extends State<LoginScreen> {
                 },
                 style: TextStyle(color: Colors.black),
                 decoration: InputDecoration(
-                  border: new OutlineInputBorder(
+                  border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                     borderSide: BorderSide(
                       color: Colors.blueGrey[800]!,
@@ -121,18 +121,18 @@ class _LoginScreen extends State<LoginScreen> {
                     ),
                   ),
                   filled: true,
-                  hintStyle: new TextStyle(
+                  hintStyle: TextStyle(
                     color: Colors.blueGrey[300],
                   ),
                   hintText: "Email",
                   fillColor: Colors.white,
-                  errorText: _validateEmail(textControllerEmail?.text)
-                      ? null
-                      : "Invalid email",
-                  errorStyle: TextStyle(
-                    fontSize: 12,
-                    color: Colors.redAccent,
-                  ),
+                  // errorText: _validateEmail(textControllerEmail?.text)
+                  //     ? null
+                  //     : "Invalid email",
+                  // errorStyle: TextStyle(
+                  //   fontSize: 12,
+                  //   color: Colors.redAccent,
+                  // ),
                 ),
               ),
             ),
@@ -158,7 +158,7 @@ class _LoginScreen extends State<LoginScreen> {
                 },
                 style: TextStyle(color: Colors.black),
                 decoration: InputDecoration(
-                  border: new OutlineInputBorder(
+                  border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                     borderSide: BorderSide(
                       color: Colors.blueGrey[800]!,
@@ -166,18 +166,18 @@ class _LoginScreen extends State<LoginScreen> {
                     ),
                   ),
                   filled: true,
-                  hintStyle: new TextStyle(
+                  hintStyle: TextStyle(
                     color: Colors.blueGrey[300],
                   ),
                   hintText: "Password",
                   fillColor: Colors.white,
-                  errorText: _validatePassword(textControllerPassword?.text)
-                      ? null
-                      : "Invalid password",
-                  errorStyle: TextStyle(
-                    fontSize: 12,
-                    color: Colors.redAccent,
-                  ),
+                  // errorText: _validatePassword(textControllerPassword?.text)
+                  //     ? null
+                  //     : "Invalid password",
+                  // errorStyle: TextStyle(
+                  //   fontSize: 12,
+                  //   color: Colors.redAccent,
+                  // ),
                 ),
               ),
             ),
@@ -202,6 +202,11 @@ class _LoginScreen extends State<LoginScreen> {
                       Get.off(const SuccessScreen());
                     }).catchError((error) {
                       print('Sign in Error: $error');
+                      const snackBar = SnackBar(
+                        content: Text(
+                            "Sign in error."),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     });
                     // setState(() {
                     //   _isRegistering = false;
@@ -209,6 +214,11 @@ class _LoginScreen extends State<LoginScreen> {
                     // });
                   } else {
                     print("Sign in error");
+                    const snackBar = SnackBar(
+                      content: Text(
+                          "Sign in error."),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   }
                 },
                 child: const Text(
