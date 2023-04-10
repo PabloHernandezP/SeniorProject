@@ -1,18 +1,19 @@
 import 'package:equine_ai/pages/dashboard/widgets/charts/bar_chart.dart';
 import 'package:equine_ai/pages/dashboard/widgets/charts/line_chart.dart';
 import 'package:equine_ai/pages/dashboard/widgets/charts/pie_chart.dart';
+import 'package:equine_ai/styles/dashboard_styles.dart';
 import 'package:flutter/material.dart';
 
 class MyDataWidget extends StatelessWidget {
   final double data;
-  final String label;
+  final String name;
   final String type;
   final Color color;
 
   const MyDataWidget({
     Key? key,
     required this.data,
-    required this.label,
+    required this.name,
     required this.type,
     required this.color,
   }) : super(key: key);
@@ -28,11 +29,8 @@ class MyDataWidget extends StatelessWidget {
             height: 8,
           ),
           Text(
-            label,
-            style: const TextStyle(
-              fontSize: 16,
-              color: Colors.black,
-            ),
+            name,
+            style: gaitParameterName,
           ),
           const SizedBox(
             height: 8,
@@ -46,8 +44,8 @@ class MyDataWidget extends StatelessWidget {
               (type == 'LineChart')
                   ? const MyLineChart()
                   : (type == 'PieChart')
-                  ? const MyPieChart()
-                  : const MyBarChart(),
+                      ? const MyPieChart()
+                      : const MyBarChart(),
               (type == 'LineChart' || type == 'BarChart')
                   ? const SizedBox(width: 45)
                   : const SizedBox(width: 35),

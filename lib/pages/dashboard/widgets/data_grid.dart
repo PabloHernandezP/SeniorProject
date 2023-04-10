@@ -11,7 +11,7 @@ class DataGrid extends StatelessWidget {
       itemBuilder: (BuildContext context, int index) {
         if (index == 0 || index == 2) {
           final subtitle =
-          index == 0 ? 'Latest Results' : 'Historical Averages';
+              index == 0 ? 'Latest Results' : 'Historical Averages';
           return Padding(
             padding: const EdgeInsets.all(16.0),
             child: Text(
@@ -28,19 +28,19 @@ class DataGrid extends StatelessWidget {
             children: const [
               MyDataWidget(
                 data: 80,
-                label: 'Strike Angle',
+                name: 'Strike Angle',
                 type: 'LineChart',
                 color: Colors.green,
               ),
               MyDataWidget(
                 data: 15,
-                label: 'Stride Length',
+                name: 'Stride Length',
                 type: 'PieChart',
                 color: Colors.yellow,
               ),
               MyDataWidget(
                 data: 45,
-                label: 'Stance Time',
+                name: 'Stance Time',
                 type: 'BarChart',
                 color: Colors.red,
               ),
