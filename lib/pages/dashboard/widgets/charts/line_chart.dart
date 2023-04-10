@@ -2,13 +2,17 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class MyLineChart extends StatelessWidget {
-  const MyLineChart({super.key});
+  final double chartHeight;
+  final double chartWidth;
+
+  const MyLineChart(
+      {super.key, required this.chartHeight, required this.chartWidth});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width / 4,
-      height: MediaQuery.of(context).size.width / 4,
+      width: chartWidth,
+      height: chartHeight,
       child: LineChart(
         LineChartData(
           lineBarsData: [

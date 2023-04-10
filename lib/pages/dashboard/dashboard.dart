@@ -1,4 +1,4 @@
-import 'package:equine_ai/pages/dashboard/widgets/data_grid.dart';
+import 'package:equine_ai/pages/dashboard/widgets/dashboard_body.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/my_app_bar.dart';
 import '../../widgets/my_drawer.dart';
@@ -15,7 +15,7 @@ class Dashboard extends StatelessWidget {
         onSettingsPressed: () {},
       ),
       drawer: const MyDrawer(),
-      body: const DataGrid(),
+      body: const DashboardBody(),
     );
   }
 }
