@@ -1,4 +1,5 @@
 import 'package:equine_ai/pages/dashboard/widgets/charts/bar_chart.dart';
+import 'package:equine_ai/pages/dashboard/widgets/charts/fast_facts.dart';
 import 'package:equine_ai/pages/dashboard/widgets/charts/line_chart.dart';
 import 'package:equine_ai/pages/dashboard/widgets/charts/pie_chart.dart';
 import 'package:equine_ai/styles/dashboard_styles.dart';
@@ -51,32 +52,36 @@ class Parameter extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(top: 8, bottom: 8),
                   child: MyLineChart(
-                    chartHeight: maxHeight - 10,
-                    chartWidth: maxWidth - 10,
+                    chartHeight: maxHeight - 100,
+                    chartWidth: maxWidth - 100,
                   ),
                 ),
               if (type == 'BarChart')
                 Padding(
                   padding: const EdgeInsets.only(top: 8, bottom: 8),
                   child: MyBarChart(
-                    chartHeight: maxHeight - 10,
-                    chartWidth: maxWidth - 10,
+                    chartHeight: maxHeight - 100,
+                    chartWidth: maxWidth - 100,
                   ),
                 ),
               if (type == 'PieChart')
                 Padding(
                   padding: const EdgeInsets.only(top: 8, bottom: 8),
                   child: MyPieChart(
-                    chartHeight: maxHeight - 10,
-                    chartWidth: maxWidth - 10,
+                    chartHeight: maxHeight - 100,
+                    chartWidth: maxWidth - 100,
                   ),
                 ),
-              if (type == 'ConformationData')
+              if (type == 'FastFacts')
                 Padding(
                   padding: const EdgeInsets.only(top: 8, bottom: 8),
-                  child: MyLineChart(
-                    chartHeight: maxHeight - 10,
-                    chartWidth: maxWidth - 10,
+                  child: FastFacts(
+                    chartHeight: maxHeight - 100,
+                    chartWidth: maxWidth - 100,
+                    fact1: 'Fact 1',
+                    fact2: 'Fact 2',
+                    fact3: 'Fact 3',
+                    fact4: 'Fact 4',
                   ),
                 ),
               Text(

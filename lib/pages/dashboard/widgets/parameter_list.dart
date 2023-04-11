@@ -6,7 +6,6 @@ class ParameterList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Define the widgets to be displayed in the horizontal list
     const List<Widget> widgets = [
       Parameter(
         data: 80,
@@ -26,11 +25,22 @@ class ParameterList extends StatelessWidget {
         type: 'BarChart',
         color: Colors.red,
       ),
+      Parameter(
+        data: 45,
+        name: 'Extra Thing',
+        type: 'BarChart',
+        color: Colors.red,
+      ),
+      Parameter(
+        data: 45,
+        name: 'Conformation Data',
+        type: 'FastFacts',
+        color: Colors.red,
+      ),
     ];
 
     int widgetsPerRow = 3;
 
-    // Create a horizontal list using the ListView widget
     return ListView.builder(
       itemCount: (widgets.length / widgetsPerRow).ceil(),
       itemBuilder: (BuildContext context, int index) {
@@ -40,8 +50,8 @@ class ParameterList extends StatelessWidget {
 
         return Wrap(
           spacing: 8.0,
-          children: widgets.sublist(startIndex,
-              endIndex), // Adjust the spacing between widgets as needed
+          alignment: WrapAlignment.center,
+          children: widgets.sublist(startIndex, endIndex),
         );
       },
     );

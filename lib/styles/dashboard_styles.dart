@@ -40,3 +40,15 @@ TextStyle simpleData = const TextStyle(
   fontWeight: FontWeight.bold,
   color: Colors.black,
 );
+
+TextStyle factCategory = const TextStyle(
+  fontSize: 20,
+  fontWeight: FontWeight.bold,
+  color: Colors.black,
+);
+
+TextStyle factResult = const TextStyle(
+  fontSize: 20,
+  fontWeight: FontWeight.normal,
+  color: Colors.black,
+);
