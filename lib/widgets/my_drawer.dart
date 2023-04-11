@@ -1,4 +1,5 @@
 import 'package:equine_ai/pages/dashboard/dashboard.dart';
+import 'package:equine_ai/pages/profile/profile_page.dart';
 import 'package:equine_ai/pages/upload/upload_data_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -24,7 +25,8 @@ class MyDrawer extends StatelessWidget {
             title: const Text('Profile'),
             onTap: () {
               Navigator.pop(context);
-              // Navigate to profile page
+                Get.to(const ProfilePage());
+
             },
           ),
           ListTile(
