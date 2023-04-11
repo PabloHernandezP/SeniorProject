@@ -28,19 +28,19 @@ class MyDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.dashboard),
-            title: const Text('Dashboard'),
-            onTap: () {
-              Navigator.pop(context);
-              Get.to(const Dashboard());
-            },
-          ),
-          ListTile(
             leading: const Icon(Icons.cloud_upload),
             title: const Text('Upload Data'),
             onTap: () {
               Navigator.pop(context);
               Get.to(const UploadDataPage());
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.bar_chart),
+            title: const Text('Analyze Data'),
+            onTap: () {
+              Navigator.pop(context);
+              Get.to(const Dashboard());
             },
           ),
           ListTile(
