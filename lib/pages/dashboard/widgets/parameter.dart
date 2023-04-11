@@ -78,16 +78,19 @@ class Parameter extends StatelessWidget {
                   child: FastFacts(
                     chartHeight: maxHeight - 100,
                     chartWidth: maxWidth - 100,
-                    fact1: 'Fact 1',
-                    fact2: 'Fact 2',
-                    fact3: 'Fact 3',
-                    fact4: 'Fact 4',
+                    facts: const [
+                      ['Fact 1', 'Value 1'],
+                      ['Fact 2', 'Value 2'],
+                      ['Fact 3', 'Value 3'],
+                      ['Fact 4', 'Value 4']
+                    ],
                   ),
                 ),
-              Text(
-                data.toString(),
-                style: neutralResult,
-              ),
+              if (type != 'FastFacts')
+                Text(
+                  data.toString(),
+                  style: neutralResult,
+                ),
             ],
           ),
         ),

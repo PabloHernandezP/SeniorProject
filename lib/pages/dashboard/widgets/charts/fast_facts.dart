@@ -5,19 +5,13 @@ class FastFacts extends StatelessWidget {
   final double chartHeight;
   final double chartWidth;
 
-  final String fact1;
-  final String fact2;
-  final String fact3;
-  final String fact4;
+  final List<List<String>> facts;
 
   const FastFacts(
       {super.key,
       required this.chartHeight,
       required this.chartWidth,
-      required this.fact1,
-      required this.fact2,
-      required this.fact3,
-      required this.fact4});
+      required this.facts});
 
   @override
   Widget build(BuildContext context) {
@@ -28,58 +22,20 @@ class FastFacts extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                '$fact1: ',
-                style: factCategory,
-              ),
-              Text(
-                fact1,
-                style: factResult,
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                '$fact2: ',
-                style: factCategory,
-              ),
-              Text(
-                fact2,
-                style: factResult,
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                '$fact3: ',
-                style: factCategory,
-              ),
-              Text(
-                fact3,
-                style: factResult,
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                '$fact4: ',
-                style: factCategory,
-              ),
-              Text(
-                fact4,
-                style: factResult,
-              ),
-            ],
-          ),
+          for (var fact in facts)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                RichText(
+                  text: TextSpan(
+                    children: <TextSpan>[
+                      TextSpan(text: '${fact[0]}: ', style: factCategory),
+                      TextSpan(text: fact[1], style: factResult),
+                    ],
+                  ),
+                ),
+              ],
+            ),
         ],
       ),
     );

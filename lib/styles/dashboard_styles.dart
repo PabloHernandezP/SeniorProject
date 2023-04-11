@@ -6,13 +6,13 @@ TextStyle heading = const TextStyle(
 );
 
 TextStyle gaitParameterName = const TextStyle(
-  fontSize: 16,
+  fontSize: 19,
   fontWeight: FontWeight.bold,
   color: Colors.black,
 );
 
 TextStyle neutralResult = const TextStyle(
-  fontSize: 24,
+  fontSize: 18,
   fontWeight: FontWeight.bold,
   color: Colors.black,
 );
