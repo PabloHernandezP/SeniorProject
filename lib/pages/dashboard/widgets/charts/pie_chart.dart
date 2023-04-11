@@ -2,13 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 
 class MyPieChart extends StatelessWidget {
-  const MyPieChart({super.key});
+  final double chartHeight;
+  final double chartWidth;
+
+  const MyPieChart({
+    super.key,
+    required this.chartHeight,
+    required this.chartWidth,
+  });
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width / 4,
-      height: MediaQuery.of(context).size.width / 4,
+      height: chartHeight,
+      width: chartWidth,
       child: PieChart(
         PieChartData(
           sections: [

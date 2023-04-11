@@ -2,13 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 
 class MyBarChart extends StatelessWidget {
-  const MyBarChart({super.key});
+  final double chartHeight;
+  final double chartWidth;
+
+  const MyBarChart(
+      {super.key, required this.chartHeight, required this.chartWidth});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width / 4,
-      height: MediaQuery.of(context).size.width / 4,
+      width: chartWidth,
+      height: chartHeight,
       child: BarChart(
         BarChartData(
           alignment: BarChartAlignment.spaceEvenly,
