@@ -1,4 +1,5 @@
 import 'package:equine_ai/pages/dashboard/dashboard.dart';
+import 'package:equine_ai/pages/history/history.dart';
 import 'package:equine_ai/pages/profile/profile_page.dart';
 import 'package:equine_ai/pages/upload/upload_data_page.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +49,8 @@ class MyDrawer extends StatelessWidget {
             leading: const Icon(Icons.history),
             title: const Text('Access History'),
             onTap: () {
-              // Navigate to the history page
+              Navigator.pop(context);
+              Get.to(const History());
             },
           ),
           ListTile(
