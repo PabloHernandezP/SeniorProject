@@ -22,11 +22,10 @@ class MyDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.person),
-            title: const Text('Profile'),
+            title: const Text('Manage Profiles'),
             onTap: () {
               Navigator.pop(context);
-                Get.to(const ProfilePage());
-
+              Get.to(const ProfilePage());
             },
           ),
           ListTile(
@@ -47,7 +46,7 @@ class MyDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.history),
-            title: const Text('History'),
+            title: const Text('Access History'),
             onTap: () {
               // Navigate to the history page
             },
