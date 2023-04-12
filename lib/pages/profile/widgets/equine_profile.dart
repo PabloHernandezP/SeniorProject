@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'equine_profile_edit_dialog.dart';
 
 class EquineProfile extends StatefulWidget {
-  const EquineProfile({super.key});
+  final Function(EquineProfile)? onRemove;
+
+  const EquineProfile({super.key, this.onRemove});
 
   @override
   _EquineProfileState createState() => _EquineProfileState();
@@ -10,10 +12,6 @@ class EquineProfile extends StatefulWidget {
 
 class _EquineProfileState extends State<EquineProfile> {
   String _name = 'John Doe';
-  String _email = 'john.doe@example.com';
-  String _role = 'Developer';
-  String _subscriptionStatus = 'Active';
-
   String _breed = 'Warmblood';
   String _color = 'Bay';
   String _yearOfBirth = '2010';
@@ -92,6 +90,12 @@ class _EquineProfileState extends State<EquineProfile> {
               IconButton(
                 onPressed: () => _editProfile(context),
                 icon: const Icon(Icons.edit),
+                tooltip: 'Edit equine profile',
+              ),
+              IconButton(
+                onPressed: () => widget.onRemove?.call(widget),
+                icon: const Icon(Icons.remove_circle),
+                tooltip: 'Delete equine profile',
               ),
             ],
           ),

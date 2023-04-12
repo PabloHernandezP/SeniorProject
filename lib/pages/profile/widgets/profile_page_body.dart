@@ -5,14 +5,13 @@ import 'package:flutter/material.dart';
 import 'equine_profile.dart';
 
 class ProfilePageBody extends StatefulWidget {
+  const ProfilePageBody({super.key});
+
   @override
   _ProfilePageBodyState createState() => _ProfilePageBodyState();
 }
 
 class _ProfilePageBodyState extends State<ProfilePageBody> {
-  final List<PersonalProfile> _personalProfiles = [
-    const PersonalProfile(),
-  ];
   final List<EquineProfile> _equineProfiles = [
     const EquineProfile(),
   ];
@@ -20,9 +19,17 @@ class _ProfilePageBodyState extends State<ProfilePageBody> {
   final String firstHeading = "Personal Profile";
   final String secondHeading = "Equine Profiles";
 
-  void _addNewEquineProfileCard() {
+  void _addNewEquineProfile() {
     setState(() {
-      _equineProfiles.add(const EquineProfile());
+      _equineProfiles.add(EquineProfile(
+        onRemove: _removeEquineProfile,
+      ));
+    });
+  }
+
+  void _removeEquineProfile(EquineProfile equineProfile) {
+    setState(() {
+      _equineProfiles.remove(equineProfile);
     });
   }
 
@@ -53,7 +60,7 @@ class _ProfilePageBodyState extends State<ProfilePageBody> {
         ),
         const SizedBox(height: 10),
         FloatingActionButton(
-          onPressed: _addNewEquineProfileCard,
+          onPressed: _addNewEquineProfile,
           tooltip: 'Add another horse to your profile',
           child: const Icon(Icons.add),
         ),
