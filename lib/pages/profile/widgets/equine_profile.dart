@@ -46,6 +46,8 @@ class _EquineProfileState extends State<EquineProfile> {
         _discipline = updatedInfo['discipline']!;
         _competitionLevel = updatedInfo['competitionLevel']!;
       });
+
+      // write new state to DB here
     }
   }
 
