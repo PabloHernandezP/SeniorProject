@@ -50,54 +50,59 @@ class _EquineProfileState extends State<EquineProfile> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Card(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const CircleAvatar(
-                backgroundImage:
-                    AssetImage('assets/equine_genetics_lab_logo.png'),
-                radius: 40,
-              ),
-              const SizedBox(width: 20),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      _name,
-                      style: const TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: 4),
-                    Text('Breed: $_breed'),
-                    const SizedBox(height: 4),
-                    Text('Color: $_color'),
-                    const SizedBox(height: 4),
-                    Text('Year of Birth: $_yearOfBirth'),
-                    const SizedBox(height: 4),
-                    Text('Sex: $_sex'),
-                    const SizedBox(height: 4),
-                    Text('Discipline: $_discipline'),
-                    const SizedBox(height: 4),
-                    Text('Competition Level: $_competitionLevel'),
-                  ],
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    return SizedBox(
+      width: screenWidth / 2.5,
+      child: Center(
+        child: Card(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const CircleAvatar(
+                  backgroundImage:
+                      AssetImage('assets/equine_genetics_lab_logo.png'),
+                  radius: 40,
                 ),
-              ),
-              IconButton(
-                onPressed: () => _editProfile(context),
-                icon: const Icon(Icons.edit),
-                tooltip: 'Edit equine profile',
-              ),
-              IconButton(
-                onPressed: () => widget.onRemove?.call(widget),
-                icon: const Icon(Icons.remove_circle),
-                tooltip: 'Delete equine profile',
-              ),
-            ],
+                const SizedBox(width: 20),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        _name,
+                        style: const TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 4),
+                      Text('Breed: $_breed'),
+                      const SizedBox(height: 4),
+                      Text('Color: $_color'),
+                      const SizedBox(height: 4),
+                      Text('Year of Birth: $_yearOfBirth'),
+                      const SizedBox(height: 4),
+                      Text('Sex: $_sex'),
+                      const SizedBox(height: 4),
+                      Text('Discipline: $_discipline'),
+                      const SizedBox(height: 4),
+                      Text('Competition Level: $_competitionLevel'),
+                    ],
+                  ),
+                ),
+                IconButton(
+                  onPressed: () => _editProfile(context),
+                  icon: const Icon(Icons.edit),
+                  tooltip: 'Edit equine profile',
+                ),
+                IconButton(
+                  onPressed: () => widget.onRemove?.call(widget),
+                  icon: const Icon(Icons.remove_circle),
+                  tooltip: 'Remove equine profile',
+                ),
+              ],
+            ),
           ),
         ),
       ),

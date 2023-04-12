@@ -36,36 +36,45 @@ class _ProfilePageBodyState extends State<ProfilePageBody> {
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
 
-    return Column(
-      children: [
-        Text(
-          firstHeading,
-          style: heading,
-        ),
-        SizedBox(
-          height: screenHeight / 5,
-          child: const PersonalProfile(),
-        ),
-        Text(
-          secondHeading,
-          style: heading,
-        ),
-        Expanded(
-          child: SingleChildScrollView(
-            child: Column(
-              children: _equineProfiles,
+    return SizedBox(
+      width: screenWidth,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            firstHeading,
+            style: heading,
+          ),
+          SizedBox(
+            height: screenHeight / 5,
+            width: screenWidth / 3,
+            child: const PersonalProfile(),
+          ),
+          Text(
+            secondHeading,
+            style: heading,
+          ),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Wrap(
+                alignment: WrapAlignment.center,
+                spacing: 8,
+                runSpacing: 8,
+                children: _equineProfiles,
+              ),
             ),
           ),
-        ),
-        const SizedBox(height: 10),
-        FloatingActionButton(
-          onPressed: _addNewEquineProfile,
-          tooltip: 'Add another horse to your profile',
-          child: const Icon(Icons.add),
-        ),
-        const SizedBox(height: 10),
-      ],
+          const SizedBox(height: 10),
+          FloatingActionButton(
+            onPressed: _addNewEquineProfile,
+            tooltip: 'Add another horse to your profile',
+            child: const Icon(Icons.add),
+          ),
+          const SizedBox(height: 10),
+        ],
+      ),
     );
   }
 }

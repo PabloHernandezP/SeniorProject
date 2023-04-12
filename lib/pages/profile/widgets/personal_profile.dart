@@ -71,6 +71,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
               IconButton(
                 onPressed: () => _editProfile(context),
                 icon: const Icon(Icons.edit),
+                tooltip: 'Edit your profile',
               ),
             ],
           ),

@@ -9,10 +9,10 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Account Information"),
+        title: const Text("Your Profiles"),
       ),
       drawer: const MyDrawer(),
-      body: ProfilePageBody(),
+      body: const ProfilePageBody(),
     );
   }
 }
