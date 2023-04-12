@@ -14,6 +14,7 @@ class ProfilePageBody extends StatefulWidget {
 class _ProfilePageBodyState extends State<ProfilePageBody> {
   final List<EquineProfile> _equineProfiles = [
     const EquineProfile(),
+    // read previous state from DB here
   ];
 
   final String firstHeading = "Personal Profile";
@@ -55,7 +56,7 @@ class _ProfilePageBodyState extends State<ProfilePageBody> {
           SizedBox(
             height: screenHeight / 5,
             width: screenWidth / 2.5,
-            child: const PersonalProfile(),
+            child: const PersonalProfile(), // read previous state from DB here
           ),
           SizedBox(
             height: screenHeight / 20,
