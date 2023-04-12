@@ -1,3 +1,4 @@
+import 'package:equine_ai/styles/profile_styles.dart';
 import 'package:flutter/material.dart';
 import 'equine_profile_edit_dialog.dart';
 
@@ -11,13 +12,13 @@ class EquineProfile extends StatefulWidget {
 }
 
 class _EquineProfileState extends State<EquineProfile> {
-  String _name = 'John Doe';
-  String _breed = 'Warmblood';
-  String _color = 'Bay';
-  String _yearOfBirth = '2010';
-  String _sex = 'Male';
-  String _discipline = 'Dressage';
-  String _competitionLevel = 'First';
+  String _name = 'New Horse';
+  String _breed = ' ';
+  String _color = ' ';
+  String _yearOfBirth = ' ';
+  String _sex = ' ';
+  String _discipline = ' ';
+  String _competitionLevel = ' ';
 
   Future<void> _editProfile(BuildContext context) async {
     final updatedInfo = await showDialog<Map<String, String>>(
@@ -61,45 +62,102 @@ class _EquineProfileState extends State<EquineProfile> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const CircleAvatar(
-                  backgroundImage:
-                      AssetImage('assets/equine_genetics_lab_logo.png'),
-                  radius: 40,
+                const Expanded(
+                  flex: 2,
+                  child: CircleAvatar(
+                    backgroundImage:
+                        AssetImage('assets/equine_genetics_lab_logo.png'),
+                    radius: 40,
+                  ),
                 ),
                 const SizedBox(width: 20),
                 Expanded(
+                  flex: 6,
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
                         _name,
-                        style: const TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
+                        style: profileName,
+                      ),
+                      const SizedBox(height: 10),
+                      RichText(
+                        text: TextSpan(
+                          children: <TextSpan>[
+                            TextSpan(text: 'Breed: ', style: attributeCategory),
+                            TextSpan(text: _breed, style: attributeValue),
+                          ],
+                        ),
                       ),
                       const SizedBox(height: 4),
-                      Text('Breed: $_breed'),
+                      RichText(
+                        text: TextSpan(
+                          children: <TextSpan>[
+                            TextSpan(text: 'Color: ', style: attributeCategory),
+                            TextSpan(text: _color, style: attributeValue),
+                          ],
+                        ),
+                      ),
                       const SizedBox(height: 4),
-                      Text('Color: $_color'),
+                      RichText(
+                        text: TextSpan(
+                          children: <TextSpan>[
+                            TextSpan(
+                                text: 'Year of Birth: ',
+                                style: attributeCategory),
+                            TextSpan(text: _yearOfBirth, style: attributeValue),
+                          ],
+                        ),
+                      ),
                       const SizedBox(height: 4),
-                      Text('Year of Birth: $_yearOfBirth'),
+                      RichText(
+                        text: TextSpan(
+                          children: <TextSpan>[
+                            TextSpan(text: 'Sex: ', style: attributeCategory),
+                            TextSpan(text: _sex, style: attributeValue),
+                          ],
+                        ),
+                      ),
                       const SizedBox(height: 4),
-                      Text('Sex: $_sex'),
+                      RichText(
+                        text: TextSpan(
+                          children: <TextSpan>[
+                            TextSpan(
+                                text: 'Discipline: ', style: attributeCategory),
+                            TextSpan(text: _discipline, style: attributeValue),
+                          ],
+                        ),
+                      ),
                       const SizedBox(height: 4),
-                      Text('Discipline: $_discipline'),
-                      const SizedBox(height: 4),
-                      Text('Competition Level: $_competitionLevel'),
+                      RichText(
+                        text: TextSpan(
+                          children: <TextSpan>[
+                            TextSpan(
+                                text: 'Competition Level: ',
+                                style: attributeCategory),
+                            TextSpan(
+                                text: _competitionLevel, style: attributeValue),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),
-                IconButton(
-                  onPressed: () => _editProfile(context),
-                  icon: const Icon(Icons.edit),
-                  tooltip: 'Edit equine profile',
+                Expanded(
+                  flex: 1,
+                  child: IconButton(
+                    onPressed: () => _editProfile(context),
+                    icon: const Icon(Icons.edit),
+                    tooltip: 'Edit equine profile',
+                  ),
                 ),
-                IconButton(
-                  onPressed: () => widget.onRemove?.call(widget),
-                  icon: const Icon(Icons.remove_circle),
-                  tooltip: 'Remove equine profile',
+                Expanded(
+                  flex: 1,
+                  child: IconButton(
+                    onPressed: () => widget.onRemove?.call(widget),
+                    icon: const Icon(Icons.remove_circle),
+                    tooltip: 'Remove equine profile',
+                  ),
                 ),
               ],
             ),

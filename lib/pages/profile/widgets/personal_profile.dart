@@ -1,4 +1,5 @@
 import 'package:equine_ai/pages/profile/widgets/personal_profile_edit_dialog.dart';
+import 'package:equine_ai/styles/profile_styles.dart';
 import 'package:flutter/material.dart';
 
 class PersonalProfile extends StatefulWidget {
@@ -44,34 +45,64 @@ class _PersonalProfileState extends State<PersonalProfile> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const CircleAvatar(
-                backgroundImage:
-                    AssetImage('assets/equine_genetics_lab_logo.png'),
-                radius: 40,
+              const Expanded(
+                flex: 1,
+                child: CircleAvatar(
+                  backgroundImage:
+                      AssetImage('assets/equine_genetics_lab_logo.png'),
+                  radius: 40,
+                ),
               ),
               const SizedBox(width: 20),
               Expanded(
+                flex: 3,
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
                       _name,
-                      style: const TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold),
+                      style: profileName,
+                    ),
+                    const SizedBox(height: 10),
+                    RichText(
+                      text: TextSpan(
+                        children: <TextSpan>[
+                          TextSpan(text: 'Email: ', style: attributeCategory),
+                          TextSpan(text: _email, style: attributeValue),
+                        ],
+                      ),
                     ),
                     const SizedBox(height: 4),
-                    Text(_email),
+                    RichText(
+                      text: TextSpan(
+                        children: <TextSpan>[
+                          TextSpan(text: 'Role: ', style: attributeCategory),
+                          TextSpan(text: _role, style: attributeValue),
+                        ],
+                      ),
+                    ),
                     const SizedBox(height: 4),
-                    Text(_role),
-                    const SizedBox(height: 4),
-                    Text('Subscription Status: $_subscriptionStatus'),
+                    RichText(
+                      text: TextSpan(
+                        children: <TextSpan>[
+                          TextSpan(
+                              text: 'Subscription Status: ',
+                              style: attributeCategory),
+                          TextSpan(
+                              text: _subscriptionStatus, style: attributeValue),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
-              IconButton(
-                onPressed: () => _editProfile(context),
-                icon: const Icon(Icons.edit),
-                tooltip: 'Edit your profile',
+              Expanded(
+                flex: 1,
+                child: IconButton(
+                  onPressed: () => _editProfile(context),
+                  icon: const Icon(Icons.edit),
+                  tooltip: 'Edit personal profile',
+                ),
               ),
             ],
           ),

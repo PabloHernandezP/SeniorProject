@@ -43,18 +43,28 @@ class _ProfilePageBodyState extends State<ProfilePageBody> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(
-            firstHeading,
-            style: heading,
+          SizedBox(
+            height: screenHeight / 20,
+            child: Center(
+              child: Text(
+                firstHeading,
+                style: heading,
+              ),
+            ),
           ),
           SizedBox(
             height: screenHeight / 5,
-            width: screenWidth / 3,
+            width: screenWidth / 2.5,
             child: const PersonalProfile(),
           ),
-          Text(
-            secondHeading,
-            style: heading,
+          SizedBox(
+            height: screenHeight / 20,
+            child: Center(
+              child: Text(
+                secondHeading,
+                style: heading,
+              ),
+            ),
           ),
           Expanded(
             child: SingleChildScrollView(
