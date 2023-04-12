@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 
-class ProfileEditDialog extends StatefulWidget {
+class PersonalProfileEditDialog extends StatefulWidget {
   final String name;
   final String email;
   final String role;
 
-  const ProfileEditDialog(
+  const PersonalProfileEditDialog(
       {required this.name, required this.email, required this.role});
 
   @override
-  _ProfileEditDialogState createState() => _ProfileEditDialogState();
+  _PersonalProfileEditDialogState createState() =>
+      _PersonalProfileEditDialogState();
 }
 
-class _ProfileEditDialogState extends State<ProfileEditDialog> {
+class _PersonalProfileEditDialogState extends State<PersonalProfileEditDialog> {
   late TextEditingController _nameController;
   late TextEditingController _emailController;
   late TextEditingController _roleController;

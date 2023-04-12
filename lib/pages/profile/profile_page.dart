@@ -12,7 +12,7 @@ class ProfilePage extends StatelessWidget {
         title: const Text("Account Information"),
       ),
       drawer: const MyDrawer(),
-      body: const ProfileBody(),
+      body: ProfilePageBody(),
     );
   }
 }

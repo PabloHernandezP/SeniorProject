@@ -1,4 +1,4 @@
-import 'package:equine_ai/pages/profile/widgets/profile_edit_dialog.dart';
+import 'package:equine_ai/pages/profile/widgets/personal_profile_edit_dialog.dart';
 import 'package:flutter/material.dart';
 
 class PersonalProfile extends StatefulWidget {
@@ -18,7 +18,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
     final updatedInfo = await showDialog<Map<String, String>>(
       context: context,
       builder: (BuildContext context) {
-        return ProfileEditDialog(
+        return PersonalProfileEditDialog(
           name: _name,
           email: _email,
           role: _role,
