@@ -1,4 +1,5 @@
 import 'package:equine_ai/pages/dashboard/dashboard.dart';
+import 'package:equine_ai/pages/history/history.dart';
 import 'package:equine_ai/pages/login/login_screen.dart';
 import 'package:equine_ai/pages/login/global_state_management.dart';
 import 'package:equine_ai/pages/profile/profile_page.dart';
@@ -54,23 +55,26 @@ class MyDrawer extends StatelessWidget {
             leading: const Icon(Icons.history),
             title: const Text('Access History'),
             onTap: () {
-              // Navigate to the history page
+              Navigator.pop(context);
+              Get.to(const History());
             },
           ),
           ListTile(
             leading: const Icon(Icons.logout),
             title: const Text('Log Out'),
             onTap: () async {
-              if (signedThroughGoogle.isTrue){ // use google sign out method
-                await signOutGoogle().then((r){
-                  signedThroughGoogle.value = false; // reset back to false after sign out
+              if (signedThroughGoogle.isTrue) {
+                // use google sign out method
+                await signOutGoogle().then((r) {
+                  signedThroughGoogle.value =
+                      false; // reset back to false after sign out
                   Get.off(LoginScreen());
                 });
-              }
-              else { // use normal sign out method
-                await signOut().then((r){
-                    Get.off(LoginScreen());
-                  });
+              } else {
+                // use normal sign out method
+                await signOut().then((r) {
+                  Get.off(LoginScreen());
+                });
               }
             },
           ),
