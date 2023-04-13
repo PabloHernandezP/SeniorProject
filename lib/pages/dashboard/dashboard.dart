@@ -1,4 +1,4 @@
-import 'package:equine_ai/pages/dashboard/widgets/data_grid.dart';
+import 'package:equine_ai/pages/dashboard/widgets/dashboard_body.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../widgets/my_app_bar.dart';
@@ -12,12 +12,12 @@ class Dashboard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MyAppBar(
-        title: "Dashboard",
+        title: "Latest Results",
         onDrawerPressed: () {},
         onSettingsPressed: () {},
       ),
       drawer: const MyDrawer(),
-      body: const DataGrid(),
+      body: const DashboardBody(),
     );
   }
 }

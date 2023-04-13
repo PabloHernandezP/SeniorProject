@@ -1,6 +1,7 @@
 import 'package:equine_ai/pages/dashboard/dashboard.dart';
 import 'package:equine_ai/pages/login/login_screen.dart';
 import 'package:equine_ai/pages/login/global_state_management.dart';
+import 'package:equine_ai/pages/profile/profile_page.dart';
 import 'package:equine_ai/pages/upload/upload_data_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -27,18 +28,10 @@ class MyDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.person),
-            title: const Text('Profile'),
+            title: const Text('Manage Profiles'),
             onTap: () {
               Navigator.pop(context);
-              // Navigate to profile page
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.dashboard),
-            title: const Text('Dashboard'),
-            onTap: () {
-              Navigator.pop(context);
-              Get.to(const Dashboard());
+              Get.to(const ProfilePage());
             },
           ),
           ListTile(
@@ -50,8 +43,16 @@ class MyDrawer extends StatelessWidget {
             },
           ),
           ListTile(
+            leading: const Icon(Icons.bar_chart),
+            title: const Text('Analyze Data'),
+            onTap: () {
+              Navigator.pop(context);
+              Get.to(const Dashboard());
+            },
+          ),
+          ListTile(
             leading: const Icon(Icons.history),
-            title: const Text('History'),
+            title: const Text('Access History'),
             onTap: () {
               // Navigate to the history page
             },
