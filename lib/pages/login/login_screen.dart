@@ -62,7 +62,8 @@ class _LoginScreen extends State<LoginScreen> {
             ),
             Container(
               constraints: const BoxConstraints(minWidth: 200, maxWidth: 600),
-              padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
+              padding: const EdgeInsets.only(
+                  left: 15.0, right: 15.0, top: 0, bottom: 0),
               //padding: EdgeInsets.symmetric(horizontal: 200),
               child: TextField(
                 focusNode: textFocusNodeEmail,
@@ -106,7 +107,8 @@ class _LoginScreen extends State<LoginScreen> {
             ),
             Container(
               constraints: BoxConstraints(minWidth: 200, maxWidth: 600),
-              padding: EdgeInsets.only(left: 15.0, right: 15.0, top: 15, bottom: 0),
+              padding:
+                  EdgeInsets.only(left: 15.0, right: 15.0, top: 15, bottom: 0),
               child: TextField(
                 obscureText: true,
                 focusNode: textFocusNodePassword,
@@ -175,8 +177,7 @@ class _LoginScreen extends State<LoginScreen> {
                     }).catchError((error) {
                       print('Sign in Error: $error');
                       var snackBar = SnackBar(
-                        content: Text(
-                            'Sign in Error: $error'),
+                        content: Text('Sign in Error: $error'),
                       );
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     });
@@ -187,8 +188,7 @@ class _LoginScreen extends State<LoginScreen> {
                   } else {
                     print("Sign in error");
                     const snackBar = SnackBar(
-                      content: Text(
-                          "Sign in error."),
+                      content: Text("Sign in error."),
                     );
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   }
@@ -222,16 +222,14 @@ class _LoginScreen extends State<LoginScreen> {
                         .then((result) {
                       //print(result);
                       const snackBar = SnackBar(
-                        content:
-                            Text('Registration successful!'),
+                        content: Text('Registration successful!'),
                       );
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       Get.off(DisplayNameScreen());
                     }).catchError((error) {
                       print('Registration Error: $error');
                       var snackBar = SnackBar(
-                        content: Text(
-                            'Registration Error: $error'),
+                        content: Text('Registration Error: $error'),
                       );
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     });
@@ -255,12 +253,28 @@ class _LoginScreen extends State<LoginScreen> {
               height: 10,
             ),
             Container(
-              //decoration: BoxDecoration(color: Colors.white.withAlpha(0)),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.white),
+                borderRadius: BorderRadius.circular(50),
+                color: Colors.white,
+                ),
               child: GoogleButton(),
             ),
             TextButton(
-              onPressed: () {
+              onPressed: () async {
                 //TODO FORGOT PASSWORD SCREEN GOES HERE
+                await forgotPassword(textControllerEmail?.text).then((value) {
+                  var snackBar = SnackBar(
+                    content: Text(value),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                }).catchError((error) {
+                  print('Password reset error: $error');
+                  var snackBar = SnackBar(
+                    content: Text('Password reset error: $error'),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                });
               },
               child: const Text(
                 'Forgot Password',
