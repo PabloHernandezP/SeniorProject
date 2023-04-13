@@ -1,5 +1,6 @@
 import 'package:equine_ai/widgets/my_drawer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import '../../widgets/my_app_bar.dart';
 import '../dashboard/dashboard.dart';
@@ -45,9 +46,10 @@ class _LoginScreen extends State<LoginScreen> {
       appBar: AppBar(title: const Text("Login")),
       body: SingleChildScrollView(
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(top: 60.0),
+              padding: const EdgeInsets.only(top: 30.0, bottom: 30.0),
               child: Center(
                 child: SizedBox(
                     width: 200,
@@ -58,9 +60,10 @@ class _LoginScreen extends State<LoginScreen> {
                     child: Image.asset('assets/equine_genetics_lab_logo.png')),
               ),
             ),
-            Padding(
-              //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
-              padding: EdgeInsets.symmetric(horizontal: 15),
+            Container(
+              constraints: const BoxConstraints(minWidth: 200, maxWidth: 600),
+              padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
+              //padding: EdgeInsets.symmetric(horizontal: 200),
               child: TextField(
                 focusNode: textFocusNodeEmail,
                 keyboardType: TextInputType.emailAddress,
@@ -101,9 +104,9 @@ class _LoginScreen extends State<LoginScreen> {
                 ),
               ),
             ),
-            Padding(
-              padding:
-                  EdgeInsets.only(left: 15.0, right: 15.0, top: 15, bottom: 0),
+            Container(
+              constraints: BoxConstraints(minWidth: 200, maxWidth: 600),
+              padding: EdgeInsets.only(left: 15.0, right: 15.0, top: 15, bottom: 0),
               child: TextField(
                 obscureText: true,
                 focusNode: textFocusNodePassword,
@@ -146,9 +149,13 @@ class _LoginScreen extends State<LoginScreen> {
                 ),
               ),
             ),
+            const SizedBox(
+              width: 10,
+              height: 10,
+            ),
             Container(
-              padding: const EdgeInsets.only(
-                  left: 15.0, right: 15.0, top: 12, bottom: 0),
+              //padding: const EdgeInsets.only(left: 15.0, right: 15.0, top: 12, bottom: 0),
+              //padding: EdgeInsets.all(50.0),
               height: 50,
               width: 250,
               decoration: BoxDecoration(
@@ -193,9 +200,12 @@ class _LoginScreen extends State<LoginScreen> {
                 ),
               ),
             ),
+            const SizedBox(
+              width: 10,
+              height: 10,
+            ),
             Container(
-              padding: const EdgeInsets.only(
-                  left: 15.0, right: 15.0, top: 12, bottom: 0),
+              //padding: const EdgeInsets.only(left: 15.0, right: 15.0, top: 12, bottom: 0),
               height: 50,
               width: 250,
               decoration: BoxDecoration(
@@ -240,7 +250,12 @@ class _LoginScreen extends State<LoginScreen> {
                 ),
               ),
             ),
+            const SizedBox(
+              width: 10,
+              height: 10,
+            ),
             Container(
+              //decoration: BoxDecoration(color: Colors.white.withAlpha(0)),
               child: GoogleButton(),
             ),
             TextButton(
