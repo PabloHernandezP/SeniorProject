@@ -1,9 +1,11 @@
+import 'package:equine_ai/pages/dashboard/dashboard.dart';
+import 'package:equine_ai/pages/login/global_state_management.dart';
+import 'package:equine_ai/pages/login/login_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
-import 'success_screen.dart';
 import 'package:get/get.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -14,15 +16,53 @@ final GoogleSignIn googleSignIn = GoogleSignIn(
     // ],
     );
 
-String? name;
-String? imageUrl;
 
-bool? authSignedIn;
-String? uid;
-String? userEmail;
+String? _imageUrl;
+String? _name;
+bool? _authSignedIn;
+String? _uid;
+String? _userEmail;
 
 FirebaseAuth getAuthInstance() {
   return _auth;
+}
+
+bool validateEmail(String? value) {
+  value = value?.trim();
+
+  if (textControllerEmail?.text != null) {
+    if (value != null) {
+      if (value.isEmpty) {
+        return false;
+      } else if (!value.contains(RegExp(
+          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+"))) {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+bool validatePassword(String? value) {
+  value = value?.trim();
+
+  if (textControllerPassword?.text != null) {
+    if (value != null) {
+      if (value.isEmpty) {
+        return false;
+      } else if (!value.contains(
+          RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]{6,}"))) {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+
+  return true;
 }
 
 Future<String?> signInWithGoogle() async {
@@ -49,10 +89,10 @@ Future<String?> signInWithGoogle() async {
     assert(user.displayName != null);
     assert(user.photoURL != null);
 
-    uid = user.uid;
-    name = user.displayName;
-    userEmail = user.email;
-    imageUrl = user.photoURL;
+    _uid = user.uid;
+    _name = user.displayName;
+    _userEmail = user.email;
+    _imageUrl = user.photoURL;
 
     assert(!user.isAnonymous);
     assert(await user.getIdToken() != null);
@@ -63,42 +103,27 @@ Future<String?> signInWithGoogle() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('auth', true);
 
+
+
     return 'Google sign in successful, User UID: ${user.uid}';
   }
 
   return null;
 }
 
-// Future<UserCredential> signInWithGoogle() async {
-//   // Trigger the authentication flow
-//   final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-//
-//   // Obtain the auth details from the request
-//   final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
-//
-//   // Create a new credential
-//   final credential = GoogleAuthProvider.credential(
-//     accessToken: googleAuth?.accessToken,
-//     idToken: googleAuth?.idToken,
-//   );
-//
-//   // Once signed in, return the UserCredential
-//   return await FirebaseAuth.instance.signInWithCredential(credential);
-// }
-
-void signOutGoogle() async {
+Future<String> signOutGoogle() async {
   await googleSignIn.signOut();
   await _auth.signOut();
 
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setBool('auth', false);
 
-  uid = null;
-  name = null;
-  userEmail = null;
-  imageUrl = null;
+  _uid = null;
+  _name = null;
+  _userEmail = null;
+  _imageUrl = null;
 
-  print("User signed out of Google account");
+  return "User signed out of Google account";
 }
 
 Future<String> registerWithEmailPassword(String email, String password) async {
@@ -118,8 +143,8 @@ Future<String> registerWithEmailPassword(String email, String password) async {
     assert(user.uid != null);
     assert(user.email != null);
 
-    uid = user.uid;
-    userEmail = user.email;
+    _uid = user.uid;
+    _userEmail = user.email;
 
     assert(!user.isAnonymous);
     assert(await user.getIdToken() != null);
@@ -146,8 +171,8 @@ Future<String> signInWithEmailPassword(String email, String password) async {
     assert(user.uid != null);
     assert(user.email != null);
 
-    uid = user.uid;
-    userEmail = user.email;
+    _uid = user.uid;
+    _userEmail = user.email;
 
     assert(!user.isAnonymous);
     assert(await user.getIdToken() != null);
@@ -170,8 +195,8 @@ Future<String> signOut() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setBool('auth', false);
 
-  uid = null;
-  userEmail = null;
+  _uid = null;
+  _userEmail = null;
 
   return 'User signed out';
 }
@@ -183,6 +208,7 @@ class GoogleButton extends StatefulWidget {
 
 class _GoogleButtonState extends State<GoogleButton> {
   bool _isProcessing = false;
+  //final Controller c = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -202,15 +228,8 @@ class _GoogleButtonState extends State<GoogleButton> {
             _isProcessing = true;
           });
           await signInWithGoogle().then((result) {
-            Get.off(SuccessScreen());
-            // print(result);
-            // Navigator.of(context).pop();
-            // Navigator.of(context).pushReplacement(
-            //   MaterialPageRoute(
-            //     fullscreenDialog: true,
-            //     builder: (context) => SuccessScreen(),
-            //   ),
-            // );
+            Get.off(const Dashboard());
+            signedThroughGoogle.value = true; // for calling correct log out implementation
           }).catchError((error) {
             print('Registration Error: $error');
           });
@@ -235,13 +254,13 @@ class _GoogleButtonState extends State<GoogleButton> {
               : Row(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
+                  children: const <Widget>[
                     Image(
                       image: AssetImage("assets/google_logo.png"),
                       height: 30.0,
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 20),
+                      padding: EdgeInsets.only(left: 20),
                       child: Text(
                         'Continue with Google',
                         style: TextStyle(
