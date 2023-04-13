@@ -1,4 +1,5 @@
 import 'package:equine_ai/pages/dashboard/dashboard.dart';
+import 'package:equine_ai/pages/profile/profile_page.dart';
 import 'package:equine_ai/pages/upload/upload_data_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -21,10 +22,10 @@ class MyDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.person),
-            title: const Text('Profile'),
+            title: const Text('Manage Profiles'),
             onTap: () {
               Navigator.pop(context);
-              // Navigate to profile page
+              Get.to(const ProfilePage());
             },
           ),
           ListTile(
@@ -45,7 +46,7 @@ class MyDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.history),
-            title: const Text('History'),
+            title: const Text('Access History'),
             onTap: () {
               // Navigate to the history page
             },
