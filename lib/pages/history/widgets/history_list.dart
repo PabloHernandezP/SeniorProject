@@ -7,9 +7,7 @@ class HistoryList extends StatelessWidget {
     5,
     (index) => HistoryEntryData(
       title: 'Analysis ${index + 1}',
-      info1: 'Info1: Value ${index + 1}',
-      info2: 'Info2: Value ${index + 1}',
-      info3: 'Info3: Value ${index + 1}',
+      date: 'Date: Value ${index + 1}',
     ),
   );
 

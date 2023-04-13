@@ -33,11 +33,7 @@ class HistoryEntry extends StatelessWidget {
                 height: 10,
               ),
               const SizedBox(height: 8),
-              Text(historyEntryData.info1),
-              const SizedBox(height: 4),
-              Text(historyEntryData.info2),
-              const SizedBox(height: 4),
-              Text(historyEntryData.info3),
+              Text(historyEntryData.date),
               const SizedBox(height: 8),
               TextButton.icon(
                 onPressed: () {
@@ -56,14 +52,10 @@ class HistoryEntry extends StatelessWidget {
 
 class HistoryEntryData {
   final String title;
-  final String info1;
-  final String info2;
-  final String info3;
+  final String date;
 
   HistoryEntryData({
     required this.title,
-    required this.info1,
-    required this.info2,
-    required this.info3,
+    required this.date,
   });
 }
