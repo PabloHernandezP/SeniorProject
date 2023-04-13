@@ -1,53 +1,66 @@
 import 'package:flutter/material.dart';
 
 class HistoryEntry extends StatelessWidget {
-  final UserProfileAnalysis userProfileAnalysis;
+  final HistoryEntryData historyEntryData;
 
-  const HistoryEntry({Key? key, required this.userProfileAnalysis})
+  const HistoryEntry({Key? key, required this.historyEntryData})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              userProfileAnalysis.title,
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            Text(userProfileAnalysis.info1),
-            const SizedBox(height: 4),
-            Text(userProfileAnalysis.info2),
-            const SizedBox(height: 4),
-            Text(userProfileAnalysis.info3),
-            const SizedBox(height: 8),
-            TextButton.icon(
-              onPressed: () {
-                // Implement your CSV export functionality here
-                print('Export results for ${userProfileAnalysis.title}');
-              },
-              icon: const Icon(Icons.download, size: 18),
-              label: const Text('Export Results'),
-            ),
-          ],
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    return SizedBox(
+      height: screenHeight / 4,
+      child: Center(
+        child: Card(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: screenWidth / 2.5,
+                height: 1,
+              ),
+              Text(
+                historyEntryData.title,
+                style:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(
+                width: 1,
+                height: 10,
+              ),
+              const SizedBox(height: 8),
+              Text(historyEntryData.info1),
+              const SizedBox(height: 4),
+              Text(historyEntryData.info2),
+              const SizedBox(height: 4),
+              Text(historyEntryData.info3),
+              const SizedBox(height: 8),
+              TextButton.icon(
+                onPressed: () {
+                  // read CSV from DB here
+                },
+                icon: const Icon(Icons.download, size: 18),
+                label: const Text('Export Results'),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-class UserProfileAnalysis {
+class HistoryEntryData {
   final String title;
   final String info1;
   final String info2;
   final String info3;
 
-  UserProfileAnalysis({
+  HistoryEntryData({
     required this.title,
     required this.info1,
     required this.info2,
