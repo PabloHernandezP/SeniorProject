@@ -1,7 +1,9 @@
 import 'package:equine_ai/pages/dashboard/widgets/dashboard_body.dart';
 import 'package:flutter/material.dart';
-import '../../widgets/my_drawer.dart';
+import 'package:get/get.dart';
 import '../../widgets/my_app_bar.dart';
+import '../../widgets/my_drawer.dart';
+import '../login/global_state_management.dart';
 
 class Dashboard extends StatelessWidget {
   const Dashboard({Key? key}) : super(key: key);

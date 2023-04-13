@@ -2,8 +2,10 @@ import 'package:equine_ai/widgets/my_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../widgets/my_app_bar.dart';
+import '../dashboard/dashboard.dart';
 import 'authentication.dart';
-import 'success_screen.dart';
+import 'display_name.dart';
+import 'global_state_management.dart';
 
 TextEditingController? textControllerEmail;
 FocusNode? textFocusNodeEmail;
@@ -15,44 +17,6 @@ bool _isEditingPassword = true;
 
 bool _isRegistering = false;
 
-bool _validateEmail(String? value) {
-  value = value?.trim();
-
-  if (textControllerEmail?.text != null) {
-    if (value != null) {
-      if (value.isEmpty) {
-        return false;
-      } else if (!value.contains(RegExp(
-          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+"))) {
-        return false;
-      }
-    } else {
-      return false;
-    }
-  }
-
-  return true;
-}
-
-bool _validatePassword(String? value) {
-  value = value?.trim();
-
-  if (textControllerPassword?.text != null) {
-    if (value != null) {
-      if (value.isEmpty) {
-        return false;
-      } else if (!value.contains(
-          RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]{6,}"))) {
-        return false;
-      }
-    } else {
-      return false;
-    }
-  }
-
-  return true;
-}
-
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -61,6 +25,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreen extends State<LoginScreen> {
+  //final Controller c = Get.put(Controller());
+
   @override
   void initState() {
     textControllerEmail = TextEditingController();
@@ -77,7 +43,6 @@ class _LoginScreen extends State<LoginScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(title: const Text("Login")),
-      drawer: const MyDrawer(),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
@@ -193,18 +158,18 @@ class _LoginScreen extends State<LoginScreen> {
                   setState(() {
                     _isRegistering = true;
                   });
-                  if (_validateEmail(textControllerEmail?.text) &&
-                      _validatePassword(textControllerPassword?.text)) {
+                  if (validateEmail(textControllerEmail?.text) &&
+                      validatePassword(textControllerPassword?.text)) {
                     await signInWithEmailPassword(textControllerEmail!.text,
                             textControllerPassword!.text)
                         .then((result) {
                       //print(result);
-                      Get.off(const SuccessScreen());
+                      Get.off(const Dashboard());
                     }).catchError((error) {
                       print('Sign in Error: $error');
-                      const snackBar = SnackBar(
+                      var snackBar = SnackBar(
                         content: Text(
-                            "Sign in error."),
+                            'Sign in Error: $error'),
                       );
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     });
@@ -237,8 +202,8 @@ class _LoginScreen extends State<LoginScreen> {
                   color: Colors.blue, borderRadius: BorderRadius.circular(20)),
               child: TextButton(
                 onPressed: () async {
-                  if (_validateEmail(textControllerEmail?.text) &&
-                      _validatePassword(textControllerPassword?.text)) {
+                  if (validateEmail(textControllerEmail?.text) &&
+                      validatePassword(textControllerPassword?.text)) {
                     setState(() {
                       _isRegistering = true;
                     });
@@ -248,14 +213,15 @@ class _LoginScreen extends State<LoginScreen> {
                       //print(result);
                       const snackBar = SnackBar(
                         content:
-                            Text('Registration successful! Please sign in.'),
+                            Text('Registration successful!'),
                       );
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      Get.off(DisplayNameScreen());
                     }).catchError((error) {
                       print('Registration Error: $error');
-                      const snackBar = SnackBar(
+                      var snackBar = SnackBar(
                         content: Text(
-                            "This email address is already in use by another account."),
+                            'Registration Error: $error'),
                       );
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     });
