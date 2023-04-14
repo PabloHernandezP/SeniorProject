@@ -14,6 +14,7 @@ class EquineProfile extends StatefulWidget {
   final String? sex;
   final String? discipline;
   final String? competitionLevel;
+  final void Function(String oldName, String newName)? onNameUpdate;
 
   const EquineProfile({
     Key? key,
@@ -26,7 +27,9 @@ class EquineProfile extends StatefulWidget {
     this.sex,
     this.discipline,
     this.competitionLevel,
+    this.onNameUpdate,
   }) : super(key: key);
+
 
   @override
   _EquineProfileState createState() => _EquineProfileState(
@@ -43,7 +46,7 @@ class EquineProfile extends StatefulWidget {
 
 
 class _EquineProfileState extends State<EquineProfile> {
-  final String? _profileKey; // Add this line
+  final String? _profileKey;
   String _name = 'New Horse';
   String _breed = ' ';
   String _color = ' ';
@@ -51,6 +54,7 @@ class _EquineProfileState extends State<EquineProfile> {
   String _sex = ' ';
   String _discipline = ' ';
   String _competitionLevel = ' ';
+  final void Function(String oldName, String newName)? onNameUpdate;
 
   _EquineProfileState({
     String? profileKey, // Add this line
@@ -61,6 +65,7 @@ class _EquineProfileState extends State<EquineProfile> {
     String? sex,
     String? discipline,
     String? competitionLevel,
+    this.onNameUpdate,
   })  : _profileKey = profileKey, // Add this line
         _name = name ?? 'New Horse',
         _breed = breed ?? ' ',
@@ -91,6 +96,7 @@ class _EquineProfileState extends State<EquineProfile> {
     );
 
     if (updatedInfo != null) {
+      String oldName = _name;
       setState(() {
         _name = updatedInfo['name']!;
         _breed = updatedInfo['breed']!;
@@ -101,7 +107,8 @@ class _EquineProfileState extends State<EquineProfile> {
         _competitionLevel = updatedInfo['competitionLevel']!;
       });
 
-
+      // Call the onNameUpdate callback if it's not null
+      onNameUpdate?.call(oldName, _name);
 
       // Write new state to DB here
       String userId = uid!.value;
@@ -123,10 +130,8 @@ class _EquineProfileState extends State<EquineProfile> {
           .update(equineProfileData);
 
       // Update local and global lists
-      int index = equineProfileNames.indexOf(_name);
-      if (index >= 0) {
-        equineProfileNames[index] = _name;
-      }
+      equineProfileNames.remove(oldName); // Move this line here
+      equineProfileNames.add(updatedInfo['name']!);
     }
   }
 

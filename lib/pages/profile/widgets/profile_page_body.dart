@@ -3,6 +3,7 @@ import 'package:equine_ai/styles/dashboard_styles.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:equine_ai/pages/login/global_state_management.dart';
+import 'package:get/get.dart';
 
 import 'equine_profile.dart';
 
@@ -46,9 +47,13 @@ class _ProfilePageBodyState extends State<ProfilePageBody> {
                 discipline: profile['discipline'],
                 competitionLevel: profile['competitionLevel'],
                 onRemove: _removeEquineProfile,
+                onNameUpdate: (String oldName, String newName) { // Add this line
+                  equineProfileNames.remove(oldName);
+                  equineProfileNames.add(newName);
+                },
               ));
             });
-            equineProfileNames.add(profile['name']);
+            equineProfileNames.add(profile['name']).obs;
           }
         }
       }
@@ -91,10 +96,7 @@ class _ProfilePageBodyState extends State<ProfilePageBody> {
         .remove();
 
     // Remove the profile name from the local equine profile names list
-    int index = equineProfileNames.indexOf(equineProfile.name);
-    if (index >= 0) {
-      equineProfileNames.removeAt(index);
-    }
+    equineProfileNames.remove(equineProfile.name);
   }
 
 

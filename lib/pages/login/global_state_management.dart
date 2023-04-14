@@ -21,7 +21,7 @@ var name = getAuthInstance().currentUser?.displayName.obs;
 var email = getAuthInstance().currentUser?.email.obs;
 var uid = getAuthInstance().currentUser?.uid.obs;
 var signedThroughGoogle = false.obs; // used to determine which sign out to use
-var equineProfileNames = <String>[].obs;
+var equineProfileNames = <String>{}.obs;
 
 final databaseReference = FirebaseDatabase.instance.reference();
 
