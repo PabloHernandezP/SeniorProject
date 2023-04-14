@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:equine_ai/widgets/my_app_bar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -24,7 +25,6 @@ class _UploadDataPageState extends State<UploadDataPage> {
   double _uploadProgress = 0.0;
   bool _uploadComplete = false;
   String? _selectedEquineProfile;
-
 
   @override
   void initState() {
@@ -80,7 +80,11 @@ class _UploadDataPageState extends State<UploadDataPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Upload and Guidelines')),
+      appBar: MyAppBar(
+        title: 'Upload and Guidelines',
+        onDrawerPressed: () {},
+        onSettingsPressed: () {},
+      ),
       drawer: const MyDrawer(),
       body: SingleChildScrollView(
         child: Column(
@@ -159,7 +163,7 @@ class _UploadDataPageState extends State<UploadDataPage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Obx(
-                    () => DropdownButton<String>(
+                () => DropdownButton<String>(
                   value: _selectedEquineProfile,
                   hint: const Text('Not Selected'),
                   onChanged: (String? newValue) {
@@ -170,10 +174,10 @@ class _UploadDataPageState extends State<UploadDataPage> {
                   items: ['Not Selected', ...equineProfileNames]
                       .map<DropdownMenuItem<String>>(
                         (String value) => DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    ),
-                  )
+                          value: value,
+                          child: Text(value),
+                        ),
+                      )
                       .toList(),
                 ),
               ),
