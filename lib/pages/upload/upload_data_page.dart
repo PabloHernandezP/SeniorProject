@@ -114,6 +114,7 @@ class _UploadDataPageState extends State<UploadDataPage> {
                   'slide3.png',
                   'slide4.png',
                   'slide5.png',
+                  'slide6.png',
                 ].map((imagePath) {
                   return Builder(
                     builder: (BuildContext context) {
@@ -138,7 +139,7 @@ class _UploadDataPageState extends State<UploadDataPage> {
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: List.generate(5, (index) {
+                  children: List.generate(6, (index) {
                     return Container(
                       width: 8.0,
                       height: 8.0,
