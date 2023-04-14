@@ -1,6 +1,8 @@
 import 'package:equine_ai/pages/profile/widgets/personal_profile.dart';
 import 'package:equine_ai/styles/dashboard_styles.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:equine_ai/pages/login/global_state_management.dart';
 
 import 'equine_profile.dart';
 
@@ -12,17 +14,63 @@ class ProfilePageBody extends StatefulWidget {
 }
 
 class _ProfilePageBodyState extends State<ProfilePageBody> {
-  final List<EquineProfile> _equineProfiles = [
-    const EquineProfile(),
-    // read previous state from DB here
-  ];
+  final List<EquineProfile> _equineProfiles = [];
+
+  get value => null;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadEquineProfiles();
+  }
+
+  Future<void> _loadEquineProfiles() async {
+    DatabaseReference profileRef = databaseReference.child('equine_profiles').child(uid!.value);
+    profileRef.onValue.first.then((DatabaseEvent event) {
+      DataSnapshot dataSnapshot = event.snapshot;
+      Map<String, dynamic>? profilesData = dataSnapshot.value as Map<String, dynamic>?;
+
+      if (profilesData != null) {
+        for (var key in profilesData.keys) {
+          var profile = profilesData[key];
+          if (profile != null) {
+            setState(() {
+              _equineProfiles.add(EquineProfile(
+                key: Key(key),
+                profileKey: key,
+                name: profile['name'],
+                breed: profile['breed'],
+                color: profile['color'],
+                yearOfBirth: profile['yearOfBirth'],
+                sex: profile['sex'],
+                discipline: profile['discipline'],
+                competitionLevel: profile['competitionLevel'],
+                onRemove: _removeEquineProfile,
+              ));
+            });
+            equineProfileNames.add(profile['name']);
+          }
+        }
+      }
+    });
+  }
+
+
 
   final String firstHeading = "Personal Profile";
   final String secondHeading = "Equine Profiles";
 
-  void _addNewEquineProfile() {
+  void _addNewEquineProfile() async {
+    String userId = uid!.value;
+    DatabaseReference newProfileRef = await databaseReference
+        .child('equine_profiles')
+        .child(userId)
+        .push();
+    String profileKey = newProfileRef.key!;
+
     setState(() {
       _equineProfiles.add(EquineProfile(
+        profileKey: profileKey,
         onRemove: _removeEquineProfile,
       ));
     });
@@ -32,6 +80,18 @@ class _ProfilePageBodyState extends State<ProfilePageBody> {
     setState(() {
       _equineProfiles.remove(equineProfile);
     });
+
+    // Delete the entry from the database
+    String userId = uid!.value;
+    String profileKey = equineProfile.key!.toString();
+    databaseReference
+        .child('equine_profiles')
+        .child(userId)
+        .child(profileKey)
+        .remove();
+
+    // Remove the profile name from the local equine profile names list
+    equineProfileNames.remove(equineProfile.name);
   }
 
   @override

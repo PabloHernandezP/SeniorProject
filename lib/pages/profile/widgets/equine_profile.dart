@@ -1,17 +1,49 @@
 import 'package:equine_ai/styles/profile_styles.dart';
 import 'package:flutter/material.dart';
 import 'equine_profile_edit_dialog.dart';
+import 'package:equine_ai/pages/login/global_state_management.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class EquineProfile extends StatefulWidget {
   final Function(EquineProfile)? onRemove;
+  final String? profileKey; // Add this line
+  final String? name;
+  final String? breed;
+  final String? color;
+  final String? yearOfBirth;
+  final String? sex;
+  final String? discipline;
+  final String? competitionLevel;
 
-  const EquineProfile({super.key, this.onRemove});
+  const EquineProfile({
+    Key? key,
+    this.onRemove,
+    this.profileKey, // Add this line
+    this.name,
+    this.breed,
+    this.color,
+    this.yearOfBirth,
+    this.sex,
+    this.discipline,
+    this.competitionLevel,
+  }) : super(key: key);
 
   @override
-  _EquineProfileState createState() => _EquineProfileState();
+  _EquineProfileState createState() => _EquineProfileState(
+    profileKey: profileKey, // Add this line
+    name: name,
+    breed: breed,
+    color: color,
+    yearOfBirth: yearOfBirth,
+    sex: sex,
+    discipline: discipline,
+    competitionLevel: competitionLevel,
+  );
 }
 
+
 class _EquineProfileState extends State<EquineProfile> {
+  final String? _profileKey; // Add this line
   String _name = 'New Horse';
   String _breed = ' ';
   String _color = ' ';
@@ -19,6 +51,28 @@ class _EquineProfileState extends State<EquineProfile> {
   String _sex = ' ';
   String _discipline = ' ';
   String _competitionLevel = ' ';
+
+  _EquineProfileState({
+    String? profileKey, // Add this line
+    String? name,
+    String? breed,
+    String? color,
+    String? yearOfBirth,
+    String? sex,
+    String? discipline,
+    String? competitionLevel,
+  })  : _profileKey = profileKey, // Add this line
+        _name = name ?? 'New Horse',
+        _breed = breed ?? ' ',
+        _color = color ?? ' ',
+        _yearOfBirth = yearOfBirth ?? ' ',
+        _sex = sex ?? ' ',
+        _discipline = discipline ?? ' ',
+        _competitionLevel = competitionLevel ?? ' ';
+
+
+  final databaseReference = FirebaseDatabase.instance.reference();
+
 
   Future<void> _editProfile(BuildContext context) async {
     final updatedInfo = await showDialog<Map<String, String>>(
@@ -47,7 +101,32 @@ class _EquineProfileState extends State<EquineProfile> {
         _competitionLevel = updatedInfo['competitionLevel']!;
       });
 
-      // write new state to DB here
+
+
+      // Write new state to DB here
+      String userId = uid!.value;
+      String profileKey = _profileKey ?? '';
+      Map<String, String> equineProfileData = {
+        'name': _name,
+        'breed': _breed,
+        'color': _color,
+        'yearOfBirth': _yearOfBirth,
+        'sex': _sex,
+        'discipline': _discipline,
+        'competitionLevel': _competitionLevel,
+      };
+
+      await databaseReference
+          .child('equine_profiles')
+          .child(userId)
+          .child(profileKey)
+          .update(equineProfileData);
+
+      // Update local and global lists
+      int index = equineProfileNames.indexOf(_name);
+      if (index >= 0) {
+        equineProfileNames[index] = _name;
+      }
     }
   }
 
