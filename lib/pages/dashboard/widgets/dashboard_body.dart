@@ -1,3 +1,4 @@
+import 'package:equine_ai/controllers/filter_controller.dart';
 import 'package:equine_ai/pages/dashboard/widgets/parameter_list.dart';
 import 'package:equine_ai/styles/dashboard_styles.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -13,6 +14,7 @@ class DashboardBody extends StatefulWidget {
   @override
   _DashboardBodyState createState() => _DashboardBodyState();
 }
+
 class _DashboardBodyState extends State<DashboardBody> {
   @override
   void initState() {
@@ -20,21 +22,25 @@ class _DashboardBodyState extends State<DashboardBody> {
     _loadEquineProfiles();
   }
 
+  final FilterController filterController = Get.find();
+
   Future<void> _loadEquineProfiles() async {
-    DatabaseReference profileRef = databaseReference.child('equine_profiles').child(uid!.value);
+    DatabaseReference profileRef =
+        databaseReference.child('equine_profiles').child(uid!.value);
     profileRef.onValue.first.then((DatabaseEvent event) {
       DataSnapshot dataSnapshot = event.snapshot;
-      Map<String, dynamic>? profilesData = dataSnapshot.value as Map<String, dynamic>?;
+      Map<String, dynamic>? profilesData =
+          dataSnapshot.value as Map<String, dynamic>?;
 
       if (profilesData != null) {
         for (var key in profilesData.keys) {
           var profile = profilesData[key];
           if (profile != null) {
-            setState(() {
-            });
+            setState(() {});
             equineProfileNames.add(profile['name']).obs;
           }
         }
+        filterController.update();
       }
     });
   }
