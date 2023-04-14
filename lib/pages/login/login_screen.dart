@@ -1,5 +1,6 @@
 import 'package:equine_ai/widgets/my_drawer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import '../../widgets/my_app_bar.dart';
 import '../dashboard/dashboard.dart';
@@ -45,9 +46,10 @@ class _LoginScreen extends State<LoginScreen> {
       appBar: AppBar(title: const Text("Login")),
       body: SingleChildScrollView(
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(top: 60.0),
+              padding: const EdgeInsets.only(top: 30.0, bottom: 30.0),
               child: Center(
                 child: SizedBox(
                     width: 200,
@@ -58,9 +60,11 @@ class _LoginScreen extends State<LoginScreen> {
                     child: Image.asset('assets/equine_genetics_lab_logo.png')),
               ),
             ),
-            Padding(
-              //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
-              padding: EdgeInsets.symmetric(horizontal: 15),
+            Container(
+              constraints: const BoxConstraints(minWidth: 200, maxWidth: 600),
+              padding: const EdgeInsets.only(
+                  left: 15.0, right: 15.0, top: 0, bottom: 0),
+              //padding: EdgeInsets.symmetric(horizontal: 200),
               child: TextField(
                 focusNode: textFocusNodeEmail,
                 keyboardType: TextInputType.emailAddress,
@@ -101,7 +105,8 @@ class _LoginScreen extends State<LoginScreen> {
                 ),
               ),
             ),
-            Padding(
+            Container(
+              constraints: BoxConstraints(minWidth: 200, maxWidth: 600),
               padding:
                   EdgeInsets.only(left: 15.0, right: 15.0, top: 15, bottom: 0),
               child: TextField(
@@ -146,9 +151,13 @@ class _LoginScreen extends State<LoginScreen> {
                 ),
               ),
             ),
+            const SizedBox(
+              width: 10,
+              height: 10,
+            ),
             Container(
-              padding: const EdgeInsets.only(
-                  left: 15.0, right: 15.0, top: 12, bottom: 0),
+              //padding: const EdgeInsets.only(left: 15.0, right: 15.0, top: 12, bottom: 0),
+              //padding: EdgeInsets.all(50.0),
               height: 50,
               width: 250,
               decoration: BoxDecoration(
@@ -168,8 +177,7 @@ class _LoginScreen extends State<LoginScreen> {
                     }).catchError((error) {
                       print('Sign in Error: $error');
                       var snackBar = SnackBar(
-                        content: Text(
-                            'Sign in Error: $error'),
+                        content: Text('Sign in Error: $error'),
                       );
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     });
@@ -180,8 +188,7 @@ class _LoginScreen extends State<LoginScreen> {
                   } else {
                     print("Sign in error");
                     const snackBar = SnackBar(
-                      content: Text(
-                          "Sign in error."),
+                      content: Text("Sign in error."),
                     );
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   }
@@ -193,9 +200,12 @@ class _LoginScreen extends State<LoginScreen> {
                 ),
               ),
             ),
+            const SizedBox(
+              width: 10,
+              height: 10,
+            ),
             Container(
-              padding: const EdgeInsets.only(
-                  left: 15.0, right: 15.0, top: 12, bottom: 0),
+              //padding: const EdgeInsets.only(left: 15.0, right: 15.0, top: 12, bottom: 0),
               height: 50,
               width: 250,
               decoration: BoxDecoration(
@@ -212,16 +222,14 @@ class _LoginScreen extends State<LoginScreen> {
                         .then((result) {
                       //print(result);
                       const snackBar = SnackBar(
-                        content:
-                            Text('Registration successful!'),
+                        content: Text('Registration successful!'),
                       );
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       Get.off(DisplayNameScreen());
                     }).catchError((error) {
                       print('Registration Error: $error');
                       var snackBar = SnackBar(
-                        content: Text(
-                            'Registration Error: $error'),
+                        content: Text('Registration Error: $error'),
                       );
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     });
@@ -240,12 +248,33 @@ class _LoginScreen extends State<LoginScreen> {
                 ),
               ),
             ),
+            const SizedBox(
+              width: 10,
+              height: 10,
+            ),
             Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.white),
+                borderRadius: BorderRadius.circular(50),
+                color: Colors.white,
+                ),
               child: GoogleButton(),
             ),
             TextButton(
-              onPressed: () {
+              onPressed: () async {
                 //TODO FORGOT PASSWORD SCREEN GOES HERE
+                await forgotPassword(textControllerEmail?.text).then((value) {
+                  var snackBar = SnackBar(
+                    content: Text(value),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                }).catchError((error) {
+                  print('Password reset error: $error');
+                  var snackBar = SnackBar(
+                    content: Text('Password reset error: $error'),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                });
               },
               child: const Text(
                 'Forgot Password',

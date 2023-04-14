@@ -201,6 +201,25 @@ Future<String> signOut() async {
   return 'User signed out';
 }
 
+Future<String> forgotPassword(String? email) async {
+
+
+  if (email == null){
+    return "Please enter an email.";
+  } // Google users need to reset through google. Cannot sort through users that use gmail under proprietary domain
+  else if (email.contains(RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@gmail.com"))){
+    return "Please reset password through Google.";
+  }
+  else if (!validateEmail(email) ){
+    return "Invalid email. Please try again";
+  }
+  else {
+    await _auth.sendPasswordResetEmail(email: email);
+  }
+  return 'Reset password link sent!';
+}
+
+
 class GoogleButton extends StatefulWidget {
   @override
   _GoogleButtonState createState() => _GoogleButtonState();
@@ -215,7 +234,7 @@ class _GoogleButtonState extends State<GoogleButton> {
     return DecoratedBox(
       decoration: ShapeDecoration(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(10),
           side: BorderSide(color: Colors.blueGrey, width: 3),
         ),
         color: Colors.white,
