@@ -1,4 +1,4 @@
-import 'package:equine_ai/widgets/filters.dart';
+import 'package:equine_ai/widgets/filter.dart';
 import 'package:flutter/material.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -18,8 +18,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       // titleSpacing: MediaQuery.of(context).size.width / 10,
       title: Text(title),
-      actions: const <Widget>[
-        Filters(),
+      actions: <Widget>[
+        Filter(),
       ],
     );
   }
