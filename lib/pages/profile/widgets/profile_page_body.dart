@@ -83,7 +83,7 @@ class _ProfilePageBodyState extends State<ProfilePageBody> {
 
     // Delete the entry from the database
     String userId = uid!.value;
-    String profileKey = equineProfile.key!.toString();
+    String profileKey = equineProfile.profileKey!; // Replace this line
     databaseReference
         .child('equine_profiles')
         .child(userId)
@@ -91,8 +91,12 @@ class _ProfilePageBodyState extends State<ProfilePageBody> {
         .remove();
 
     // Remove the profile name from the local equine profile names list
-    equineProfileNames.remove(equineProfile.name);
+    int index = equineProfileNames.indexOf(equineProfile.name);
+    if (index >= 0) {
+      equineProfileNames.removeAt(index);
+    }
   }
+
 
   @override
   Widget build(BuildContext context) {
