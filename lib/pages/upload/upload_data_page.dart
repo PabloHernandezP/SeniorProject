@@ -9,6 +9,7 @@ import 'package:path/path.dart' as path;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:equine_ai/pages/login/firebase_options.dart';
+import 'package:equine_ai/pages/login/global_state_management.dart';
 
 class UploadDataPage extends StatefulWidget {
   const UploadDataPage({Key? key}) : super(key: key);
@@ -22,6 +23,8 @@ class _UploadDataPageState extends State<UploadDataPage> {
   final CarouselController _carouselController = CarouselController();
   double _uploadProgress = 0.0;
   bool _uploadComplete = false;
+  String? _selectedEquineProfile;
+
 
   @override
   void initState() {
@@ -152,6 +155,30 @@ class _UploadDataPageState extends State<UploadDataPage> {
                 ),
               ],
             ),
+            // Dropdown selector for equineProfileNames
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Obx(
+                    () => DropdownButton<String>(
+                  value: _selectedEquineProfile,
+                  hint: const Text('Not Selected'),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      _selectedEquineProfile = newValue;
+                    });
+                  },
+                  items: ['Not Selected', ...equineProfileNames]
+                      .map<DropdownMenuItem<String>>(
+                        (String value) => DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    ),
+                  )
+                      .toList(),
+                ),
+              ),
+            ),
+
             const SizedBox(height: 20),
             //Pre upload message
             Padding(
