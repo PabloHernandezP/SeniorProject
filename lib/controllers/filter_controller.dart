@@ -1,8 +1,27 @@
 import 'package:get/get.dart';
 
 class FilterController extends GetxController {
-  var horseNames = ['Horse 1', 'Horse 2', 'Horse 3'];
+  final RxList<String> horseNames = <String>[].obs;
   var selectedHorse = ''.obs;
+
+  List<String> get getNames => horseNames.toList();
+
+  void setHorseNames(List<String> newHorseNames) {
+    horseNames.assignAll(newHorseNames);
+  }
+
+  void addHorseName(String newHorseName) {
+    horseNames.add(newHorseName);
+  }
+
+  void removeHorseName(String oldHorseName) {
+    horseNames.remove(oldHorseName);
+  }
+
+  void replaceHorseName(String oldHorseName, String newHorseName) {
+    removeHorseName(oldHorseName);
+    addHorseName(newHorseName);
+  }
 
   void setSelectedHorse(String value) {
     selectedHorse.value = value;
