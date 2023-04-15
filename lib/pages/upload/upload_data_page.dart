@@ -11,6 +11,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:equine_ai/pages/login/firebase_options.dart';
 import 'package:equine_ai/pages/login/global_state_management.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:equine_ai/controllers/filter_controller.dart';
 
 class UploadDataPage extends StatefulWidget {
   const UploadDataPage({Key? key}) : super(key: key);
@@ -20,6 +23,7 @@ class UploadDataPage extends StatefulWidget {
 }
 
 class _UploadDataPageState extends State<UploadDataPage> {
+  final FilterController filterController = Get.find();
   int _currentSlide = 0;
   final CarouselController _carouselController = CarouselController();
   double _uploadProgress = 0.0;
@@ -43,7 +47,7 @@ class _UploadDataPageState extends State<UploadDataPage> {
     try {
       // Create a reference to the file in Firebase Storage
       FirebaseStorage storage = FirebaseStorage.instance;
-      Reference ref = storage.ref().child('videos/${path.basename(file.name)}');
+      Reference ref = storage.ref().child('${uid?.value}/${filterController.getSelectedHorse()}/videos/${path.basename(file.name)}');
 
       // Upload the file
       UploadTask task;
@@ -72,6 +76,30 @@ class _UploadDataPageState extends State<UploadDataPage> {
       setState(() {
         _uploadComplete = true;
       });
+      // Send an HTTP POST request to the given URL with the required schema
+      var requestUrl = "https://equine-ai-data-analysis-lubhti4cma-ue.a.run.app/analyze";
+      var requestBody = json.encode({
+        "video": path.basename(file.name),
+        "username": uid?.value,
+        "specimen": filterController.getSelectedHorse(),
+        "email": email?.value
+      });
+      // Print the contents of the HTTP request to the Flutter console
+      print("HTTP POST request: $requestUrl");
+      print("Request body: $requestBody");
+
+      var response = await http.post(
+          Uri.parse(requestUrl),
+          headers: {"Content-Type": "text/plain"},
+          body: requestBody
+      );
+
+      // Check and print the status of the HTTP POST request
+      if (response.statusCode == 200) {
+        print("HTTP POST request successful");
+      } else {
+        print("HTTP POST request failed with status code ${response.statusCode}");
+      }
     } catch (e) {
       print('Error uploading file: $e');
     }
@@ -178,7 +206,7 @@ class _UploadDataPageState extends State<UploadDataPage> {
                 child: ElevatedButton.icon(
                   onPressed: () async {
                     FilePickerResult? result =
-                        await FilePicker.platform.pickFiles(
+                    await FilePicker.platform.pickFiles(
                       type: FileType.custom,
                       allowedExtensions: ['mp4', 'avi', 'mov'],
                     );
@@ -219,7 +247,7 @@ class _UploadDataPageState extends State<UploadDataPage> {
             if (_uploadComplete)
               Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: Text(
                   'Your file was successfully uploaded, please allow 10-15 minutes for results to be available',
                   textAlign: TextAlign.center,
