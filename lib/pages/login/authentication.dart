@@ -1,5 +1,5 @@
 import 'package:equine_ai/pages/dashboard/dashboard.dart';
-import 'package:equine_ai/pages/login/global_state_management.dart';
+import 'package:equine_ai/controllers/global_state_management.dart';
 import 'package:equine_ai/pages/login/login_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -247,7 +247,9 @@ class _GoogleButtonState extends State<GoogleButton> {
             _isProcessing = true;
           });
           await signInWithGoogle().then((result) {
-            Get.off(const Dashboard());
+            //Get.off(const Dashboard());
+            //Get.off(()=>Dashboard());
+            Get.toNamed("/dashboard");
             signedThroughGoogle.value = true; // for calling correct log out implementation
           }).catchError((error) {
             print('Registration Error: $error');

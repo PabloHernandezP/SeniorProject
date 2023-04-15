@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:equine_ai/pages/login/global_state_management.dart';
+import 'package:equine_ai/controllers/global_state_management.dart';
 
 class FilterController extends GetxController {
   final RxSet<String> horseNames = equineProfileNames;

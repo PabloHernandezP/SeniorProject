@@ -2,7 +2,7 @@ import 'package:equine_ai/pages/profile/widgets/personal_profile.dart';
 import 'package:equine_ai/styles/dashboard_styles.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:equine_ai/pages/login/global_state_management.dart';
+import 'package:equine_ai/controllers/global_state_management.dart';
 import 'package:get/get.dart';
 
 import 'equine_profile.dart';

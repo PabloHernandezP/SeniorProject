@@ -40,7 +40,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return SingleChildScrollView(
       child: Card(
         child: Padding(
           padding: const EdgeInsets.all(16.0),

@@ -6,7 +6,7 @@ import '../../widgets/my_app_bar.dart';
 import '../dashboard/dashboard.dart';
 import 'authentication.dart';
 import 'display_name.dart';
-import 'global_state_management.dart';
+import '../../controllers/global_state_management.dart';
 
 TextEditingController? textControllerEmail;
 FocusNode? textFocusNodeEmail;
@@ -173,7 +173,9 @@ class _LoginScreen extends State<LoginScreen> {
                             textControllerPassword!.text)
                         .then((result) {
                       //print(result);
-                      Get.off(const Dashboard());
+                      //Get.off(const Dashboard());
+                      // Get.off(()=>'/dashboard');
+                      Get.toNamed("/dashboard");
                     }).catchError((error) {
                       print('Sign in Error: $error');
                       var snackBar = SnackBar(
@@ -225,7 +227,8 @@ class _LoginScreen extends State<LoginScreen> {
                         content: Text('Registration successful!'),
                       );
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      Get.off(DisplayNameScreen());
+                      // Get.off(DisplayNameScreen());
+                      Get.offNamed('/name');
                     }).catchError((error) {
                       print('Registration Error: $error');
                       var snackBar = SnackBar(

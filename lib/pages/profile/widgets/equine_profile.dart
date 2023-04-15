@@ -1,7 +1,7 @@
 import 'package:equine_ai/styles/profile_styles.dart';
 import 'package:flutter/material.dart';
 import 'equine_profile_edit_dialog.dart';
-import 'package:equine_ai/pages/login/global_state_management.dart';
+import 'package:equine_ai/controllers/global_state_management.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 class EquineProfile extends StatefulWidget {

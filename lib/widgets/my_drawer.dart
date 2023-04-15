@@ -1,7 +1,7 @@
 import 'package:equine_ai/pages/dashboard/dashboard.dart';
 import 'package:equine_ai/pages/history/history.dart';
 import 'package:equine_ai/pages/login/login_screen.dart';
-import 'package:equine_ai/pages/login/global_state_management.dart';
+import 'package:equine_ai/controllers/global_state_management.dart';
 import 'package:equine_ai/pages/profile/profile_page.dart';
 import 'package:equine_ai/pages/upload/upload_data_page.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +32,8 @@ class MyDrawer extends StatelessWidget {
             title: const Text('Manage Profiles'),
             onTap: () {
               Navigator.pop(context);
-              Get.to(const ProfilePage());
+              //Get.to(const ProfilePage());
+              Get.toNamed('/profile');
             },
           ),
           ListTile(
@@ -40,7 +41,8 @@ class MyDrawer extends StatelessWidget {
             title: const Text('Upload Data'),
             onTap: () {
               Navigator.pop(context);
-              Get.to(const UploadDataPage());
+              //Get.to(const UploadDataPage());
+              Get.toNamed('/upload');
             },
           ),
           ListTile(
@@ -48,7 +50,8 @@ class MyDrawer extends StatelessWidget {
             title: const Text('Analyze Data'),
             onTap: () {
               Navigator.pop(context);
-              Get.to(const Dashboard());
+              // Get.to(const Dashboard());
+              Get.toNamed('/dashboard');
             },
           ),
           ListTile(
@@ -56,7 +59,8 @@ class MyDrawer extends StatelessWidget {
             title: const Text('Access History'),
             onTap: () {
               Navigator.pop(context);
-              Get.to(const History());
+              //Get.to(const History());
+              Get.toNamed('/history');
             },
           ),
           ListTile(
@@ -68,12 +72,14 @@ class MyDrawer extends StatelessWidget {
                 await signOutGoogle().then((r) {
                   signedThroughGoogle.value =
                       false; // reset back to false after sign out
-                  Get.off(LoginScreen());
+                  //Get.off(LoginScreen());
+                  Get.offNamed('/login');
                 });
               } else {
                 // use normal sign out method
                 await signOut().then((r) {
-                  Get.off(LoginScreen());
+                  //Get.off(LoginScreen());
+                  Get.offNamed('/login');
                 });
               }
             },

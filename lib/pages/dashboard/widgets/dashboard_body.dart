@@ -5,7 +5,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../login/global_state_management.dart';
+import '../../../controllers/global_state_management.dart';
 import '../../profile/widgets/equine_profile.dart';
 
 class DashboardBody extends StatefulWidget {

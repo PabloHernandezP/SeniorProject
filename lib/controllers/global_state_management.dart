@@ -1,6 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
-import 'authentication.dart';
+import '../pages/login/authentication.dart';
 
 // not sure if should use variables or a class (might be minor difference)
 // classes use different syntax so be wary
@@ -29,4 +29,13 @@ String? getUserInitials(){
   return (name != null)
       ? name!.trim()!.split(RegExp(' +')).map((s) => s[0]).take(2).join()
       : '';
+}
+
+void resetState(){
+  name = getAuthInstance().currentUser?.displayName.obs;
+  email = getAuthInstance().currentUser?.email.obs;
+  uid = getAuthInstance().currentUser?.uid.obs;
+  signedThroughGoogle = false.obs; // used to determine which sign out to use
+  equineProfileNames = <String>{}.obs;
+  // might need to add sharedpreferences to regular sign in for refresh fix/reset upon logout
 }
