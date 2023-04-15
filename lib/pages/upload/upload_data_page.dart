@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:equine_ai/widgets/my_app_bar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -24,7 +25,6 @@ class _UploadDataPageState extends State<UploadDataPage> {
   double _uploadProgress = 0.0;
   bool _uploadComplete = false;
   String? _selectedEquineProfile;
-
 
   @override
   void initState() {
@@ -80,7 +80,11 @@ class _UploadDataPageState extends State<UploadDataPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Upload and Guidelines')),
+      appBar: MyAppBar(
+        title: 'Upload and Guidelines',
+        onDrawerPressed: () {},
+        onSettingsPressed: () {},
+      ),
       drawer: const MyDrawer(),
       body: SingleChildScrollView(
         child: Column(
@@ -145,7 +149,7 @@ class _UploadDataPageState extends State<UploadDataPage> {
                         shape: BoxShape.circle,
                         color: _currentSlide == index
                             ? Theme.of(context).primaryColor
-                            : Color.fromRGBO(0, 0, 0, 0.4),
+                            : const Color.fromRGBO(0, 0, 0, 0.4),
                       ),
                     );
                   }),
@@ -156,34 +160,10 @@ class _UploadDataPageState extends State<UploadDataPage> {
                 ),
               ],
             ),
-            // Dropdown selector for equineProfileNames
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Obx(
-                    () => DropdownButton<String>(
-                  value: _selectedEquineProfile,
-                  hint: const Text('Not Selected'),
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      _selectedEquineProfile = newValue;
-                    });
-                  },
-                  items: ['Not Selected', ...equineProfileNames]
-                      .map<DropdownMenuItem<String>>(
-                        (String value) => DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    ),
-                  )
-                      .toList(),
-                ),
-              ),
-            ),
-
             const SizedBox(height: 20),
             //Pre upload message
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
               child: Text(
                 'Upload a Video: Must be 1080p of an .mp4 .mov or .avi file type.',
                 textAlign: TextAlign.center,
