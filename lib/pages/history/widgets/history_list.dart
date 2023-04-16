@@ -1,30 +1,101 @@
+import 'package:equine_ai/controllers/filter_controller.dart';
 import 'package:equine_ai/pages/history/widgets/history_entry.dart';
+import 'package:equine_ai/pages/login/global_state_management.dart';
+import 'package:equine_ai/styles/history_styles.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class HistoryList extends StatelessWidget {
-  // read history from DB to populate this
-  final List<HistoryEntryData> _historyEntries = List.generate(
-    5,
-    (index) => HistoryEntryData(
-      title: 'Analysis ${index + 1}',
-      date: 'Date: Value ${index + 1}',
-    ),
-  );
+class HistoryList extends StatefulWidget {
+  HistoryList({Key? key}) : super(key: key);
 
-  HistoryList({super.key});
+  @override
+  _HistoryListState createState() => _HistoryListState();
+}
+
+class _HistoryListState extends State<HistoryList> {
+  final FilterController filterController = Get.find();
+  final Set<HistoryEntryData> _historyEntries = {};
+
+  String? selectedHorse = null;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  Future<void> _loadHistoryEntries() async {
+    DatabaseReference historyRef = databaseReference
+        .child('users')
+        .child(uid!.value)
+        .child(filterController.getSelectedHorse()!)
+        .child('output');
+    historyRef.onValue.first.then((DatabaseEvent event) {
+      DataSnapshot dataSnapshot = event.snapshot;
+      Map<String, dynamic>? historyData =
+          dataSnapshot.value as Map<String, dynamic>?;
+
+      if (historyData != null) {
+        for (var key in historyData.keys) {
+          var entry = historyData[key];
+          if (entry != null) {
+            setState(
+              () {
+                _historyEntries.add(
+                  HistoryEntryData(
+                    title: entry['video_name'],
+                    date: key,
+                    csvUrl: entry['csv_url'],
+                  ),
+                );
+              },
+            );
+          }
+        }
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: ListView.builder(
-        itemCount: _historyEntries.length,
-        itemBuilder: (context, index) {
-          return HistoryEntry(
-            historyEntryData: _historyEntries[index],
+    return GetBuilder<FilterController>(
+      init: filterController,
+      builder: (controller) {
+        if (controller.getSelectedHorse() == null) {
+          return Center(
+            child: Text(
+              'Select a Horse Above to View History',
+              style: noHorseSelected,
+            ),
           );
-        },
-      ),
+        } else {
+          if (filterController.getSelectedHorse() != selectedHorse) {
+            _historyEntries.clear();
+            _loadHistoryEntries();
+            selectedHorse = filterController.getSelectedHorse();
+          }
+          if (_historyEntries.isEmpty) {
+            return Center(
+              child: Text(
+                'No History for Selected Horse',
+                style: emptyHistory,
+              ),
+            );
+          } else {
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ListView.builder(
+                itemCount: _historyEntries.length,
+                itemBuilder: (context, index) {
+                  return HistoryEntry(
+                    historyEntryData: _historyEntries.toList()[index],
+                  );
+                },
+              ),
+            );
+          }
+        }
+      },
     );
   }
 }
