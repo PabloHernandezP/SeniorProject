@@ -16,7 +16,7 @@ class Dashboard extends StatelessWidget {
         onDrawerPressed: () {},
         onSettingsPressed: () {},
       ),
-      drawer: const MyDrawer(),
+      drawer: MyDrawer(),
       body: const DashboardBody(),
     );
   }

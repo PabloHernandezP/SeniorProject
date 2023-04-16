@@ -1,8 +1,10 @@
 import 'package:get/get.dart';
 import 'package:equine_ai/controllers/global_state_management.dart';
 
+final authService = Get.find<AuthController>();
+
 class FilterController extends GetxController {
-  final RxSet<String> horseNames = equineProfileNames;
+  final RxSet<String> horseNames = authService.equineProfileNames;
   var selectedHorse = ''.obs;
 
   Set<String> get getNames => horseNames.toSet();

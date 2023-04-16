@@ -10,7 +10,10 @@ import 'package:get/get.dart';
 import '../pages/login/authentication.dart';
 
 class MyDrawer extends StatelessWidget {
-  const MyDrawer({Key? key}) : super(key: key);
+
+  final authService = Get.find<AuthController>();
+
+  MyDrawer({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +24,8 @@ class MyDrawer extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: <Widget>[
           UserAccountsDrawerHeader(
-            accountName: Obx(() => Text("${name!.value}")),
-            accountEmail: Obx(() => Text("${email!.value}")),
+            accountName: Obx(() => Text("${authService.name!.value}")),
+            accountEmail: Obx(() => Text("${authService.email!.value}")),
             currentAccountPicture: CircleAvatar(
               child: Text(getUserInitials()!),
             ),
@@ -67,19 +70,19 @@ class MyDrawer extends StatelessWidget {
             leading: const Icon(Icons.logout),
             title: const Text('Log Out'),
             onTap: () async {
-              if (signedThroughGoogle.isTrue) {
+              if (authService.signedThroughGoogle.value) {
                 // use google sign out method
                 await signOutGoogle().then((r) {
-                  signedThroughGoogle.value =
-                      false; // reset back to false after sign out
+                  //signedThroughGoogle.value = false; // reset back to false after sign out
+                  authService.signedThroughGoogle(false); // reset back to false after sign out
                   //Get.off(LoginScreen());
-                  Get.offNamed('/login');
+                  Get.offAllNamed('/login');
                 });
               } else {
                 // use normal sign out method
                 await signOut().then((r) {
                   //Get.off(LoginScreen());
-                  Get.offNamed('/login');
+                  Get.offAllNamed('/login');
                 });
               }
             },

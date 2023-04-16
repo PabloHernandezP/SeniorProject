@@ -23,10 +23,11 @@ class _DashboardBodyState extends State<DashboardBody> {
   }
 
   final FilterController filterController = Get.find();
+  final authService = Get.find<AuthController>();
 
   Future<void> _loadEquineProfiles() async {
     DatabaseReference profileRef =
-        databaseReference.child('equine_profiles').child(uid!.value);
+        databaseReference.child('equine_profiles').child(authService.uid!.value);
     profileRef.onValue.first.then((DatabaseEvent event) {
       DataSnapshot dataSnapshot = event.snapshot;
       Map<String, dynamic>? profilesData =
@@ -37,7 +38,7 @@ class _DashboardBodyState extends State<DashboardBody> {
           var profile = profilesData[key];
           if (profile != null) {
             setState(() {});
-            equineProfileNames.add(profile['name']).obs;
+            authService.equineProfileNames.add(profile['name']).obs;
           }
         }
         filterController.update();

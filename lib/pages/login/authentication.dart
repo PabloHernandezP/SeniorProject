@@ -249,7 +249,9 @@ class _GoogleButtonState extends State<GoogleButton> {
             //Get.off(const Dashboard());
             //Get.off(()=>Dashboard());
             Get.toNamed("/dashboard");
-            signedThroughGoogle.value = true; // for calling correct log out implementation
+            final authService = Get.find<AuthController>();
+            //signedThroughGoogle.value = true; // for calling correct log out implementation
+            authService.signedThroughGoogle(true); // update value, used for calling correct log out implementation
           }).catchError((error) {
             print('Registration Error: $error');
           });

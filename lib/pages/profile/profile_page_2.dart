@@ -125,7 +125,7 @@ class _ProfilePageState extends State<ProfilePage> {
       appBar: AppBar(
         title: const Text('Profile Manager'),
       ),
-      drawer: const MyDrawer(),
+      drawer: MyDrawer(),
       body: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [

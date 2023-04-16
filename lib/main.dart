@@ -14,6 +14,7 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   setPathUrlStrategy();
+  Get.put(AuthController());
   runApp(MyApp());
 }
 
@@ -21,7 +22,6 @@ class MyApp extends StatelessWidget {
   MyApp({super.key});
 
   final filterController = Get.put(FilterController());
-  final authController = Get.put(AuthController());
 
   @override
   Widget build(BuildContext context) {

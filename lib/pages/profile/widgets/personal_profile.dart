@@ -2,6 +2,7 @@ import 'package:equine_ai/pages/profile/widgets/personal_profile_edit_dialog.dar
 import 'package:equine_ai/styles/profile_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:equine_ai/controllers/global_state_management.dart';
+import 'package:get/get.dart';
 
 class PersonalProfile extends StatefulWidget {
   const PersonalProfile({super.key});
@@ -11,8 +12,10 @@ class PersonalProfile extends StatefulWidget {
 }
 
 class _PersonalProfileState extends State<PersonalProfile> {
-  String? _name = name?.value;
-  String? _email = email?.value;
+  final authService = Get.find<AuthController>();
+
+  // String? _name = authService.name?.value;
+  // String? _email = authService.email?.value;
   String _role = 'User';
   String _subscriptionStatus = 'Active';
 
@@ -41,7 +44,8 @@ class _PersonalProfileState extends State<PersonalProfile> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      _name!,
+                      authService!.name!.value.toString(),
+                      //_name!,
                       style: profileName,
                     ),
                     const SizedBox(height: 10),
@@ -49,7 +53,8 @@ class _PersonalProfileState extends State<PersonalProfile> {
                       text: TextSpan(
                         children: <TextSpan>[
                           TextSpan(text: 'Email: ', style: attributeCategory),
-                          TextSpan(text: _email, style: attributeValue),
+                          TextSpan(text: authService.email!.value, style: attributeValue),
+                          // TextSpan(text: _email, style: attributeValue),
                         ],
                       ),
                     ),
