@@ -1,6 +1,7 @@
 import 'package:equine_ai/pages/profile/widgets/personal_profile_edit_dialog.dart';
 import 'package:equine_ai/styles/profile_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:equine_ai/pages/login/global_state_management.dart';
 
 class PersonalProfile extends StatefulWidget {
   const PersonalProfile({super.key});
@@ -10,33 +11,11 @@ class PersonalProfile extends StatefulWidget {
 }
 
 class _PersonalProfileState extends State<PersonalProfile> {
-  String _name = 'John Doe';
-  String _email = 'john.doe@example.com';
-  String _role = 'Developer';
+  String? _name = name?.value;
+  String? _email = email?.value;
+  String _role = 'User';
   String _subscriptionStatus = 'Active';
 
-  Future<void> _editProfile(BuildContext context) async {
-    final updatedInfo = await showDialog<Map<String, String>>(
-      context: context,
-      builder: (BuildContext context) {
-        return PersonalProfileEditDialog(
-          name: _name,
-          email: _email,
-          role: _role,
-        );
-      },
-    );
-
-    if (updatedInfo != null) {
-      setState(() {
-        _name = updatedInfo['name']!;
-        _email = updatedInfo['email']!;
-        _role = updatedInfo['role']!;
-      });
-
-      // write new state to DB here
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +41,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      _name,
+                      _name!,
                       style: profileName,
                     ),
                     const SizedBox(height: 10),
@@ -96,14 +75,6 @@ class _PersonalProfileState extends State<PersonalProfile> {
                       ),
                     ),
                   ],
-                ),
-              ),
-              Expanded(
-                flex: 1,
-                child: IconButton(
-                  onPressed: () => _editProfile(context),
-                  icon: const Icon(Icons.edit),
-                  tooltip: 'Edit personal profile',
                 ),
               ),
             ],
