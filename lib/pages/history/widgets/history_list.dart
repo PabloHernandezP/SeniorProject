@@ -1,6 +1,6 @@
 import 'package:equine_ai/controllers/filter_controller.dart';
 import 'package:equine_ai/pages/history/widgets/history_entry.dart';
-import 'package:equine_ai/pages/login/global_state_management.dart';
+import 'package:equine_ai/controllers/global_state_management.dart';
 import 'package:equine_ai/styles/history_styles.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +15,7 @@ class HistoryList extends StatefulWidget {
 
 class _HistoryListState extends State<HistoryList> {
   final FilterController filterController = Get.find();
+  final authService = Get.find<AuthController>();
   final Set<HistoryEntryData> _historyEntries = {};
 
   String? selectedHorse = null;
@@ -27,7 +28,7 @@ class _HistoryListState extends State<HistoryList> {
   Future<void> _loadHistoryEntries() async {
     DatabaseReference historyRef = databaseReference
         .child('users')
-        .child(uid!.value)
+        .child(authService.uid!.value)
         .child(filterController.getSelectedHorse()!)
         .child('output');
     historyRef.onValue.first.then((DatabaseEvent event) {
