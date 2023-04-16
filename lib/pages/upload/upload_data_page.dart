@@ -10,7 +10,7 @@ import 'package:path/path.dart' as path;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:equine_ai/pages/login/firebase_options.dart';
-import 'package:equine_ai/pages/login/global_state_management.dart';
+import 'package:equine_ai/controllers/global_state_management.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:equine_ai/controllers/filter_controller.dart';
