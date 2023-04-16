@@ -14,6 +14,8 @@ import 'package:equine_ai/pages/login/global_state_management.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:equine_ai/controllers/filter_controller.dart';
+import 'dart:math';
+import 'package:uuid/uuid.dart';
 
 class UploadDataPage extends StatefulWidget {
   const UploadDataPage({Key? key}) : super(key: key);
@@ -43,22 +45,35 @@ class _UploadDataPageState extends State<UploadDataPage> {
     }
   }
 
+  String _generateRandomGuid() {
+    var uuid = Uuid();
+    return uuid.v4();
+  }
+
   Future<void> _uploadFile(PlatformFile file) async {
     try {
-      // Create a reference to the file in Firebase Storage
-      FirebaseStorage storage = FirebaseStorage.instance;
-      Reference ref = storage.ref().child('${uid?.value}/${filterController.getSelectedHorse()}/videos/${path.basename(file.name)}');
+        String fileName = path.basename(file.name);
+        String fileExtension = path.extension(file.name);
 
-      // Upload the file
-      UploadTask task;
-      if (kIsWeb) {
-        task = ref.putData(file.bytes!);
-      } else {
-        File localFile = File(file.path!);
-        task = ref.putFile(localFile);
-      }
+        // Append a random GUID before the file extension
+        String newFileName =
+        fileName.replaceFirst(fileExtension, '_${_generateRandomGuid()}$fileExtension');
 
-      // Monitor the upload progress and show an error message if it fails
+        // Create a reference to the file in Firebase Storage with the new file name
+        FirebaseStorage storage = FirebaseStorage.instance;
+        Reference ref = storage.ref().child('${uid?.value}/${filterController.getSelectedHorse()}/videos/$newFileName');
+
+        // Upload the file
+        UploadTask task;
+        if (kIsWeb) {
+          task = ref.putData(file.bytes!);
+        } else {
+          File localFile = File(file.path!);
+          task = ref.putFile(localFile);
+        }
+
+
+        // Monitor the upload progress and show an error message if it fails
       task.snapshotEvents.listen((TaskSnapshot snapshot) {
         setState(() {
           _uploadProgress = (snapshot.bytesTransferred.toDouble() /
@@ -79,7 +94,7 @@ class _UploadDataPageState extends State<UploadDataPage> {
       // Send an HTTP POST request to the given URL with the required schema
       var requestUrl = "https://equine-ai-data-analysis-lubhti4cma-ue.a.run.app/analyze";
       var requestBody = json.encode({
-        "video": path.basename(file.name),
+        "video": newFileName,
         "username": uid?.value,
         "specimen": filterController.getSelectedHorse(),
         "email": email?.value
@@ -107,6 +122,7 @@ class _UploadDataPageState extends State<UploadDataPage> {
 
   @override
   Widget build(BuildContext context) {
+    bool isHorseSelected = filterController.getSelectedHorse() != null;
     return Scaffold(
       appBar: MyAppBar(
         title: 'Upload and Guidelines',
@@ -204,7 +220,8 @@ class _UploadDataPageState extends State<UploadDataPage> {
               child: FractionallySizedBox(
                 widthFactor: 1 / 3,
                 child: ElevatedButton.icon(
-                  onPressed: () async {
+                  onPressed: isHorseSelected
+                    ? () async {
                     FilePickerResult? result =
                     await FilePicker.platform.pickFiles(
                       type: FileType.custom,
@@ -220,7 +237,8 @@ class _UploadDataPageState extends State<UploadDataPage> {
                     } else {
                       // User canceled the picker
                     }
-                  },
+                  }
+                  : null,
                   icon: const Icon(Icons.file_upload),
                   label: const Text('Upload Data'),
                   style: ElevatedButton.styleFrom(
@@ -230,6 +248,18 @@ class _UploadDataPageState extends State<UploadDataPage> {
               ),
             ),
             const SizedBox(height: 20),
+            if (!isHorseSelected) // Display the message when the horse is not selected
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Text(
+                  'Please select a horse profile above before uploading.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: FractionallySizedBox(
@@ -249,7 +279,7 @@ class _UploadDataPageState extends State<UploadDataPage> {
                 padding:
                 const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: Text(
-                  'Your file was successfully uploaded, please allow 10-15 minutes for results to be available',
+                  'Your file was successfully uploaded, please allow 1-2 hours for results to be available',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.green,

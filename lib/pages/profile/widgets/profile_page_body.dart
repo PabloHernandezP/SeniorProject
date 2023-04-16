@@ -47,7 +47,7 @@ class _ProfilePageBodyState extends State<ProfilePageBody> {
                 discipline: profile['discipline'],
                 competitionLevel: profile['competitionLevel'],
                 onRemove: _removeEquineProfile,
-                onNameUpdate: (String oldName, String newName) { // Add this line
+                onNameUpdate: (String oldName, String newName) {
                   equineProfileNames.remove(oldName);
                   equineProfileNames.add(newName);
                 },
@@ -59,7 +59,6 @@ class _ProfilePageBodyState extends State<ProfilePageBody> {
       }
     });
   }
-
 
 
   final String firstHeading = "Personal Profile";
