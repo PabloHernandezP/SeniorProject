@@ -1,6 +1,8 @@
 import 'package:equine_ai/controllers/filter_controller.dart';
 import 'package:equine_ai/pages/history/widgets/history_entry.dart';
+import 'package:equine_ai/pages/login/global_state_management.dart';
 import 'package:equine_ai/styles/history_styles.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -12,19 +14,52 @@ class HistoryList extends StatefulWidget {
 }
 
 class _HistoryListState extends State<HistoryList> {
-  // read history from DB to populate this
-  final List<HistoryEntryData> _historyEntries = List.generate(
-    5,
-    (index) => HistoryEntryData(
-      title: 'Analysis ${index + 1}',
-      date: 'Date: Value ${index + 1}',
-    ),
-  );
+  final List<HistoryEntryData> _historyEntries = [];
 
   final FilterController filterController = Get.find();
 
+  Future<void> _loadHistoryEntries() async {
+    DatabaseReference historyRef = databaseReference
+        .child('users')
+        .child(uid!.value)
+        .child(filterController.getSelectedHorse()!)
+        .child('output');
+    historyRef.onValue.first.then((DatabaseEvent event) {
+      DataSnapshot dataSnapshot = event.snapshot;
+      Map<String, dynamic>? historyData =
+          dataSnapshot.value as Map<String, dynamic>?;
+
+      if (historyData != null) {
+        for (var key in historyData.keys) {
+          var entry = historyData[key];
+          if (entry != null) {
+            setState(
+              () {
+                _historyEntries.add(
+                  HistoryEntryData(
+                    title: entry['video_name'],
+                    date: entry['date'],
+                    csvUrl: entry['csv_url'],
+                  ),
+                );
+              },
+            );
+          }
+        }
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    _historyEntries.add(
+      HistoryEntryData(
+        title: "Random Video",
+        date: "12/10/2023",
+        csvUrl:
+            "https://storage.googleapis.com/equine-ai.appspot.com/seb/horse/output/C0214.mp4_output.csv",
+      ),
+    );
     return GetBuilder<FilterController>(
       init: filterController,
       builder: (controller) {
@@ -36,6 +71,9 @@ class _HistoryListState extends State<HistoryList> {
             ),
           );
         } else {
+          _historyEntries.clear;
+          _loadHistoryEntries();
+
           return Padding(
             padding: const EdgeInsets.all(8.0),
             child: ListView.builder(

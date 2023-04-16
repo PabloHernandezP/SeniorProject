@@ -1,6 +1,9 @@
+import 'package:equine_ai/controllers/filter_controller.dart';
+import 'package:equine_ai/pages/login/global_state_management.dart';
 import 'package:flutter/material.dart';
 import 'dart:html' as html;
 import 'package:firebase_database/firebase_database.dart';
+import 'package:get/get.dart';
 
 class HistoryEntry extends StatelessWidget {
   final HistoryEntryData historyEntryData;
@@ -39,14 +42,8 @@ class HistoryEntry extends StatelessWidget {
               const SizedBox(height: 8),
               TextButton.icon(
                 onPressed: () async {
-                  DatabaseReference myRef = FirebaseDatabase.instance
-                      .ref()
-                      .child(
-                          "/users/seb/horse/output/2023-04-13_19:32:02/csv_url");
-                  DatabaseEvent event = await myRef.once();
-                  var url = event.snapshot.value;
                   html.AnchorElement anchorElement =
-                      new html.AnchorElement(href: url.toString());
+                      html.AnchorElement(href: historyEntryData.csvUrl);
                   anchorElement.click();
                 },
                 icon: const Icon(Icons.download, size: 18),
@@ -63,9 +60,11 @@ class HistoryEntry extends StatelessWidget {
 class HistoryEntryData {
   final String title;
   final String date;
+  final String csvUrl;
 
   HistoryEntryData({
     required this.title,
     required this.date,
+    required this.csvUrl,
   });
 }
