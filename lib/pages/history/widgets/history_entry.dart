@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'dart:html' as html;
+import 'package:firebase_database/firebase_database.dart';
 
 class HistoryEntry extends StatelessWidget {
   final HistoryEntryData historyEntryData;
@@ -36,8 +38,16 @@ class HistoryEntry extends StatelessWidget {
               Text(historyEntryData.date),
               const SizedBox(height: 8),
               TextButton.icon(
-                onPressed: () {
-                  // read CSV from DB here
+                onPressed: () async {
+                  DatabaseReference myRef = FirebaseDatabase.instance
+                      .ref()
+                      .child(
+                          "/users/seb/horse/output/2023-04-13_19:32:02/csv_url");
+                  DatabaseEvent event = await myRef.once();
+                  var url = event.snapshot.value;
+                  html.AnchorElement anchorElement =
+                      new html.AnchorElement(href: url.toString());
+                  anchorElement.click();
                 },
                 icon: const Icon(Icons.download, size: 18),
                 label: const Text('Export Results'),
