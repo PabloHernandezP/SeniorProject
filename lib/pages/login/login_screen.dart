@@ -122,9 +122,33 @@ class _LoginScreen extends State<LoginScreen> {
                     _isEditingPassword = true;
                   });
                 },
-                onSubmitted: (value) {
+                onSubmitted: (value) async {
                   textFocusNodePassword?.unfocus();
                   //FocusScope.of(context).requestFocus(textFocusNodePassword);
+
+                  setState(() {
+                    _isRegistering = true;
+                  });
+                  if (validateEmail(textControllerEmail?.text) &&
+                      validatePassword(textControllerPassword?.text)) {
+                    await signInWithEmailPassword(textControllerEmail!.text,
+                        textControllerPassword!.text)
+                        .then((result) {
+                      Get.toNamed("/dashboard");
+                    }).catchError((error) {
+                      print('Sign in Error: $error');
+                      var snackBar = SnackBar(
+                        content: Text('Sign in Error: $error'),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    });
+                  } else {
+                    print("Sign in error");
+                    const snackBar = SnackBar(
+                      content: Text("Sign in error."),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  }
                 },
                 style: TextStyle(color: Colors.black),
                 decoration: InputDecoration(

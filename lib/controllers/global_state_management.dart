@@ -1,21 +1,28 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import '../pages/login/authentication.dart';
 
-// not sure if should use variables or a class (might be minor difference)
-// classes use different syntax so be wary
-// class Controller extends GetxController {
-//   var name = getAuthInstance().currentUser?.displayName.obs;
-//   var email = getAuthInstance().currentUser?.email.obs;
-//   var uid = getAuthInstance().currentUser?.uid.obs;
-//   var signedThroughGoogle = false.obs; // used to determine which sign out to use
-//
-//   String? getUserInitials(){
-//     return (name != null)
-//         ? name!.trim()!.split(RegExp(' +')).map((s) => s[0]).take(2).join()
-//         : '';
-//   }
-// }
+// used for route guarding
+class AuthController extends GetxController {
+
+  RxBool loggedIn = false.obs;
+  @override
+  void onInit() {
+    super.onInit();
+    _subscribe();
+  }
+
+  void _subscribe() {
+    getAuthInstance().authStateChanges().listen((User? user) {
+      if (user == null) {
+        loggedIn(false);
+      } else {
+        loggedIn(true);
+      }
+    });
+  }
+}
 
 var name = getAuthInstance().currentUser?.displayName.obs;
 var email = getAuthInstance().currentUser?.email.obs;
@@ -37,5 +44,4 @@ void resetState(){
   uid = getAuthInstance().currentUser?.uid.obs;
   signedThroughGoogle = false.obs; // used to determine which sign out to use
   equineProfileNames = <String>{}.obs;
-  // might need to add sharedpreferences to regular sign in for refresh fix/reset upon logout
 }

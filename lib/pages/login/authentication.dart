@@ -1,4 +1,3 @@
-import 'package:equine_ai/pages/dashboard/dashboard.dart';
 import 'package:equine_ai/controllers/global_state_management.dart';
 import 'package:equine_ai/pages/login/login_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
