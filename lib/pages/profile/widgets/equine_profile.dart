@@ -1,8 +1,10 @@
+import 'package:equine_ai/pages/login/authentication.dart';
 import 'package:equine_ai/styles/profile_styles.dart';
 import 'package:flutter/material.dart';
 import 'equine_profile_edit_dialog.dart';
-import 'package:equine_ai/pages/login/global_state_management.dart';
+import 'package:equine_ai/controllers/global_state_management.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:get/get.dart';
 
 class EquineProfile extends StatefulWidget {
   final Function(EquineProfile)? onRemove;
@@ -46,6 +48,8 @@ class EquineProfile extends StatefulWidget {
 
 
 class _EquineProfileState extends State<EquineProfile> {
+  final authService = Get.find<AuthController>();
+
   final String? _profileKey;
   String _name = 'New Horse';
   String _breed = ' ';
@@ -111,7 +115,7 @@ class _EquineProfileState extends State<EquineProfile> {
       onNameUpdate?.call(oldName, _name);
 
       // Write new state to DB here
-      String userId = uid!.value;
+      String userId = authService.uid!.value;
       String profileKey = _profileKey ?? '';
       Map<String, String> equineProfileData = {
         'name': _name,
@@ -130,8 +134,8 @@ class _EquineProfileState extends State<EquineProfile> {
           .update(equineProfileData);
 
       // Update local and global lists
-      equineProfileNames.remove(oldName); // Move this line here
-      equineProfileNames.add(updatedInfo['name']!);
+      authService.equineProfileNames.remove(oldName); // Move this line here
+      authService.equineProfileNames.add(updatedInfo['name']!);
     }
   }
 

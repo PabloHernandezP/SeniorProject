@@ -10,12 +10,13 @@ import 'package:path/path.dart' as path;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:equine_ai/pages/login/firebase_options.dart';
-import 'package:equine_ai/pages/login/global_state_management.dart';
+import 'package:equine_ai/controllers/global_state_management.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:equine_ai/controllers/filter_controller.dart';
 import 'dart:math';
 import 'package:uuid/uuid.dart';
+import 'package:equine_ai/controllers/global_state_management.dart';
 
 class UploadDataPage extends StatefulWidget {
   const UploadDataPage({Key? key}) : super(key: key);
@@ -26,6 +27,7 @@ class UploadDataPage extends StatefulWidget {
 
 class _UploadDataPageState extends State<UploadDataPage> {
   final FilterController filterController = Get.find();
+  final authService = Get.find<AuthController>();
   int _currentSlide = 0;
   final CarouselController _carouselController = CarouselController();
   double _uploadProgress = 0.0;
@@ -61,7 +63,7 @@ class _UploadDataPageState extends State<UploadDataPage> {
 
         // Create a reference to the file in Firebase Storage with the new file name
         FirebaseStorage storage = FirebaseStorage.instance;
-        Reference ref = storage.ref().child('${uid?.value}/${filterController.getSelectedHorse()}/videos/$newFileName');
+        Reference ref = storage.ref().child('${authService.uid?.value}/${filterController.getSelectedHorse()}/videos/$newFileName');
 
         // Upload the file
         UploadTask task;
@@ -95,9 +97,9 @@ class _UploadDataPageState extends State<UploadDataPage> {
       var requestUrl = "https://equine-ai-data-analysis-lubhti4cma-ue.a.run.app/analyze";
       var requestBody = json.encode({
         "video": newFileName,
-        "username": uid?.value,
+        "username": authService.uid?.value,
         "specimen": filterController.getSelectedHorse(),
-        "email": email?.value
+        "email": authService.email?.value
       });
       // Print the contents of the HTTP request to the Flutter console
       print("HTTP POST request: $requestUrl");
@@ -129,7 +131,7 @@ class _UploadDataPageState extends State<UploadDataPage> {
         onDrawerPressed: () {},
         onSettingsPressed: () {},
       ),
-      drawer: const MyDrawer(),
+      drawer: MyDrawer(),
       body: SingleChildScrollView(
         child: Column(
           children: [

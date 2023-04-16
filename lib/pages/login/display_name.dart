@@ -59,7 +59,9 @@ class _DisplayNameScreen extends State<DisplayNameScreen> {
                     Text('Name set successful!'),
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  Get.off(const Dashboard());
+                  // Get.off(const Dashboard());
+                  //Get.off(()=>'/dashboard');
+                  Get.toNamed("/dashboard");
                 }).catchError((e) {
                   const snackBar = SnackBar(
                     content:

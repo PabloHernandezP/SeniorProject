@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../widgets/my_app_bar.dart';
 import '../../widgets/my_drawer.dart';
-import '../login/global_state_management.dart';
+import '../../controllers/global_state_management.dart';
 
 class Dashboard extends StatelessWidget {
   const Dashboard({Key? key}) : super(key: key);
@@ -16,7 +16,7 @@ class Dashboard extends StatelessWidget {
         onDrawerPressed: () {},
         onSettingsPressed: () {},
       ),
-      drawer: const MyDrawer(),
+      drawer: MyDrawer(),
       body: const DashboardBody(),
     );
   }

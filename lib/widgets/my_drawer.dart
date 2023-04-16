@@ -1,7 +1,7 @@
 import 'package:equine_ai/pages/dashboard/dashboard.dart';
 import 'package:equine_ai/pages/history/history.dart';
 import 'package:equine_ai/pages/login/login_screen.dart';
-import 'package:equine_ai/pages/login/global_state_management.dart';
+import 'package:equine_ai/controllers/global_state_management.dart';
 import 'package:equine_ai/pages/profile/profile_page.dart';
 import 'package:equine_ai/pages/upload/upload_data_page.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +10,10 @@ import 'package:get/get.dart';
 import '../pages/login/authentication.dart';
 
 class MyDrawer extends StatelessWidget {
-  const MyDrawer({Key? key}) : super(key: key);
+
+  final authService = Get.find<AuthController>();
+
+  MyDrawer({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +24,8 @@ class MyDrawer extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: <Widget>[
           UserAccountsDrawerHeader(
-            accountName: Obx(() => Text("${name!.value}")),
-            accountEmail: Obx(() => Text("${email!.value}")),
+            accountName: Obx(() => Text("${authService.name!.value}")),
+            accountEmail: Obx(() => Text("${authService.email!.value}")),
             currentAccountPicture: CircleAvatar(
               child: Text(getUserInitials()!),
             ),
@@ -32,7 +35,8 @@ class MyDrawer extends StatelessWidget {
             title: const Text('Manage Profiles'),
             onTap: () {
               Navigator.pop(context);
-              Get.to(const ProfilePage());
+              //Get.to(const ProfilePage());
+              Get.toNamed('/profile');
             },
           ),
           ListTile(
@@ -40,7 +44,8 @@ class MyDrawer extends StatelessWidget {
             title: const Text('Upload Data'),
             onTap: () {
               Navigator.pop(context);
-              Get.to(const UploadDataPage());
+              //Get.to(const UploadDataPage());
+              Get.toNamed('/upload');
             },
           ),
           ListTile(
@@ -48,7 +53,8 @@ class MyDrawer extends StatelessWidget {
             title: const Text('Analyze Data'),
             onTap: () {
               Navigator.pop(context);
-              Get.to(const Dashboard());
+              // Get.to(const Dashboard());
+              Get.toNamed('/dashboard');
             },
           ),
           ListTile(
@@ -56,24 +62,27 @@ class MyDrawer extends StatelessWidget {
             title: const Text('Access History'),
             onTap: () {
               Navigator.pop(context);
-              Get.to(const History());
+              //Get.to(const History());
+              Get.toNamed('/history');
             },
           ),
           ListTile(
             leading: const Icon(Icons.logout),
             title: const Text('Log Out'),
             onTap: () async {
-              if (signedThroughGoogle.isTrue) {
+              if (authService.signedThroughGoogle.value) {
                 // use google sign out method
                 await signOutGoogle().then((r) {
-                  signedThroughGoogle.value =
-                      false; // reset back to false after sign out
-                  Get.off(LoginScreen());
+                  //signedThroughGoogle.value = false; // reset back to false after sign out
+                  authService.signedThroughGoogle(false); // reset back to false after sign out
+                  //Get.off(LoginScreen());
+                  Get.offAllNamed('/login');
                 });
               } else {
                 // use normal sign out method
                 await signOut().then((r) {
-                  Get.off(LoginScreen());
+                  //Get.off(LoginScreen());
+                  Get.offAllNamed('/login');
                 });
               }
             },

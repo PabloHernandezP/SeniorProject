@@ -14,7 +14,7 @@ class History extends StatelessWidget {
         onDrawerPressed: () {},
         onSettingsPressed: () {},
       ),
-      drawer: const MyDrawer(),
+      drawer: MyDrawer(),
       body: HistoryList(),
     );
   }

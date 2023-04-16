@@ -2,7 +2,7 @@ import 'package:equine_ai/pages/profile/widgets/personal_profile.dart';
 import 'package:equine_ai/styles/dashboard_styles.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:equine_ai/pages/login/global_state_management.dart';
+import 'package:equine_ai/controllers/global_state_management.dart';
 import 'package:get/get.dart';
 
 import 'equine_profile.dart';
@@ -16,6 +16,7 @@ class ProfilePageBody extends StatefulWidget {
 
 class _ProfilePageBodyState extends State<ProfilePageBody> {
   final List<EquineProfile> _equineProfiles = [];
+  final authService = Get.find<AuthController>();
 
   get value => null;
 
@@ -26,7 +27,7 @@ class _ProfilePageBodyState extends State<ProfilePageBody> {
   }
 
   Future<void> _loadEquineProfiles() async {
-    DatabaseReference profileRef = databaseReference.child('equine_profiles').child(uid!.value);
+    DatabaseReference profileRef = databaseReference.child('equine_profiles').child(authService.uid!.value);
     profileRef.onValue.first.then((DatabaseEvent event) {
       DataSnapshot dataSnapshot = event.snapshot;
       Map<String, dynamic>? profilesData = dataSnapshot.value as Map<String, dynamic>?;
@@ -48,12 +49,12 @@ class _ProfilePageBodyState extends State<ProfilePageBody> {
                 competitionLevel: profile['competitionLevel'],
                 onRemove: _removeEquineProfile,
                 onNameUpdate: (String oldName, String newName) {
-                  equineProfileNames.remove(oldName);
-                  equineProfileNames.add(newName);
+                  authService.equineProfileNames.remove(oldName);
+                  authService.equineProfileNames.add(newName);
                 },
               ));
             });
-            equineProfileNames.add(profile['name']).obs;
+            authService.equineProfileNames.add(profile['name']).obs;
           }
         }
       }
@@ -65,7 +66,7 @@ class _ProfilePageBodyState extends State<ProfilePageBody> {
   final String secondHeading = "Equine Profiles";
 
   void _addNewEquineProfile() async {
-    String userId = uid!.value;
+    String userId = authService.uid!.value;
     DatabaseReference newProfileRef = await databaseReference
         .child('equine_profiles')
         .child(userId)
@@ -86,7 +87,7 @@ class _ProfilePageBodyState extends State<ProfilePageBody> {
     });
 
     // Delete the entry from the database
-    String userId = uid!.value;
+    String userId = authService.uid!.value;
     String profileKey = equineProfile.profileKey!; // Replace this line
     databaseReference
         .child('equine_profiles')
@@ -95,7 +96,7 @@ class _ProfilePageBodyState extends State<ProfilePageBody> {
         .remove();
 
     // Remove the profile name from the local equine profile names list
-    equineProfileNames.remove(equineProfile.name);
+    authService.equineProfileNames.remove(equineProfile.name);
   }
 
 
