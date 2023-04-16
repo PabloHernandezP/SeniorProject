@@ -14,9 +14,15 @@ class HistoryList extends StatefulWidget {
 }
 
 class _HistoryListState extends State<HistoryList> {
-  final List<HistoryEntryData> _historyEntries = [];
-
   final FilterController filterController = Get.find();
+  final Set<HistoryEntryData> _historyEntries = {};
+
+  String? selectedHorse = null;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   Future<void> _loadHistoryEntries() async {
     DatabaseReference historyRef = databaseReference
@@ -38,7 +44,7 @@ class _HistoryListState extends State<HistoryList> {
                 _historyEntries.add(
                   HistoryEntryData(
                     title: entry['video_name'],
-                    date: entry['date'],
+                    date: key,
                     csvUrl: entry['csv_url'],
                   ),
                 );
@@ -52,14 +58,6 @@ class _HistoryListState extends State<HistoryList> {
 
   @override
   Widget build(BuildContext context) {
-    _historyEntries.add(
-      HistoryEntryData(
-        title: "Random Video",
-        date: "12/10/2023",
-        csvUrl:
-            "https://storage.googleapis.com/equine-ai.appspot.com/seb/horse/output/C0214.mp4_output.csv",
-      ),
-    );
     return GetBuilder<FilterController>(
       init: filterController,
       builder: (controller) {
@@ -71,20 +69,31 @@ class _HistoryListState extends State<HistoryList> {
             ),
           );
         } else {
-          _historyEntries.clear;
-          _loadHistoryEntries();
-
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ListView.builder(
-              itemCount: _historyEntries.length,
-              itemBuilder: (context, index) {
-                return HistoryEntry(
-                  historyEntryData: _historyEntries[index],
-                );
-              },
-            ),
-          );
+          if (filterController.getSelectedHorse() != selectedHorse) {
+            _historyEntries.clear();
+            _loadHistoryEntries();
+            selectedHorse = filterController.getSelectedHorse();
+          }
+          if (_historyEntries.isEmpty) {
+            return Center(
+              child: Text(
+                'No History for Selected Horse',
+                style: emptyHistory,
+              ),
+            );
+          } else {
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ListView.builder(
+                itemCount: _historyEntries.length,
+                itemBuilder: (context, index) {
+                  return HistoryEntry(
+                    historyEntryData: _historyEntries.toList()[index],
+                  );
+                },
+              ),
+            );
+          }
         }
       },
     );
