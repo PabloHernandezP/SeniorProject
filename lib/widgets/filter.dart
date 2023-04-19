@@ -3,11 +3,14 @@ import 'package:equine_ai/styles/filter_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../controllers/global_state_management.dart';
+
 class Filter extends StatelessWidget {
   Filter({super.key});
 
   final String defaultValue = 'Select a Horse';
   final FilterController filterController = Get.find();
+  final authService = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {

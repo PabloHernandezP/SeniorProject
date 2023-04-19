@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import '../pages/login/authentication.dart';
+import '../pages/profile/widgets/equine_profile.dart';
 
 class AuthController extends GetxController {
 
@@ -11,6 +12,7 @@ class AuthController extends GetxController {
   var uid = getAuthInstance().currentUser?.uid.obs;
   var signedThroughGoogle = false.obs; // used to determine which sign out to use
   var equineProfileNames = <String>{}.obs;
+  final equineProfiles = <EquineProfile>[].obs;
 
   @override
   void onInit() {
@@ -24,7 +26,8 @@ class AuthController extends GetxController {
         loggedIn(false);
         // reset variables
         signedThroughGoogle = false.obs; // used to determine which sign out to use
-        equineProfileNames = <String>{}.obs;
+        equineProfiles.clear();
+        equineProfileNames.clear();
       } else {
         loggedIn(true);
       }
@@ -45,11 +48,3 @@ String? getUserInitials(){
       ? authService.name!.value!.trim()!.split(RegExp(' +')).map((s) => s[0]).take(2).join()
       : '';
 }
-
-// void resetState(){
-//   name = getAuthInstance().currentUser?.displayName.obs;
-//   email = getAuthInstance().currentUser?.email.obs;
-//   uid = getAuthInstance().currentUser?.uid.obs;
-//   signedThroughGoogle = false.obs; // used to determine which sign out to use
-//   equineProfileNames = <String>{}.obs;
-// }
