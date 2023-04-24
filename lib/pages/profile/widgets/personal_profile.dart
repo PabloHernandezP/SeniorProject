@@ -19,7 +19,6 @@ class _PersonalProfileState extends State<PersonalProfile> {
   String _role = 'User';
   String _subscriptionStatus = 'Active';
 
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -44,7 +43,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      authService!.name!.value.toString(),
+                      authService.name!.value.toString(),
                       //_name!,
                       style: profileName,
                     ),
@@ -53,7 +52,9 @@ class _PersonalProfileState extends State<PersonalProfile> {
                       text: TextSpan(
                         children: <TextSpan>[
                           TextSpan(text: 'Email: ', style: attributeCategory),
-                          TextSpan(text: authService.email!.value, style: attributeValue),
+                          TextSpan(
+                              text: authService.email!.value,
+                              style: attributeValue),
                           // TextSpan(text: _email, style: attributeValue),
                         ],
                       ),
