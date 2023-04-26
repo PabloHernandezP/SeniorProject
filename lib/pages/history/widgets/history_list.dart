@@ -33,6 +33,11 @@ class _HistoryListState extends State<HistoryList> {
         .child('output');
     historyRef.onValue.first.then((DatabaseEvent event) {
       DataSnapshot dataSnapshot = event.snapshot;
+
+      if (!dataSnapshot.exists) {
+        return;
+      }
+
       Map<String, dynamic>? historyData =
           dataSnapshot.value as Map<String, dynamic>?;
 
@@ -44,9 +49,9 @@ class _HistoryListState extends State<HistoryList> {
               () {
                 _historyEntries.add(
                   HistoryEntryData(
-                    title: entry['video_name'],
+                    title: entry['video_name'][0],
                     date: key,
-                    csvUrl: entry['csv_url'],
+                    csvUrl: entry['csv_url'][0],
                   ),
                 );
               },
