@@ -175,80 +175,97 @@ class _DashboardBodyState extends State<DashboardBody> {
                     );
                   } else if (index == 1) {
                     List<double> paramList = parameters.toList();
+                    List<Widget> confParamWidgetList = [
+                      Limb(
+                        paramNames: const [
+                          "Avg Limb Length",
+                          "Avg Leg Length",
+                          "Max Limb Length",
+                          "Max Leg Length",
+                          "Min Limb Length",
+                          "Min Leg Length",
+                          "STD Limb Length",
+                          "STD Leg Length",
+                        ],
+                        paramValues: [
+                          paramList[0],
+                          paramList[1],
+                          paramList[8],
+                          paramList[9],
+                          paramList[14],
+                          paramList[15],
+                          paramList[21],
+                          paramList[22],
+                        ],
+                        title: 'Fore Limb',
+                      ),
+                      Limb(
+                        paramNames: const [
+                          "Avg Limb Length",
+                          "Avg Leg Length",
+                          "Max Limb Length",
+                          "Max Leg Length",
+                          "Min Limb Length",
+                          "Min Leg Length",
+                          "STD Limb Length",
+                          "STD Leg Length",
+                        ],
+                        paramValues: [
+                          paramList[0],
+                          paramList[1],
+                          paramList[8],
+                          paramList[9],
+                          paramList[14],
+                          paramList[15],
+                          paramList[21],
+                          paramList[22],
+                        ],
+                        title: 'Fore Limb 2',
+                      ),
+                      Limb(
+                        paramNames: const [
+                          "Avg Limb Length",
+                          "Avg Leg Length",
+                          "Max Limb Length",
+                          "Max Leg Length",
+                          "Min Limb Length",
+                          "Min Leg Length",
+                          "STD Limb Length",
+                          "STD Leg Length",
+                        ],
+                        paramValues: [
+                          paramList[0],
+                          paramList[1],
+                          paramList[8],
+                          paramList[9],
+                          paramList[14],
+                          paramList[15],
+                          paramList[21],
+                          paramList[22],
+                        ],
+                        title: 'Fore Limb 3',
+                      ),
+                    ];
+                    int widgetsPerRow = 3;
+                    int numWidgets = 3;
+
                     return SizedBox(
                       height: MediaQuery.of(context).size.height / 2,
-                      child: ListView(
-                        children: [
-                          Limb(
-                            paramNames: const [
-                              "Avg Limb Length",
-                              "Avg Leg Length",
-                              "Max Limb Length",
-                              "Max Leg Length",
-                              "Min Limb Length",
-                              "Min Leg Length",
-                              "STD Limb Length",
-                              "STD Leg Length",
-                            ],
-                            paramValues: [
-                              paramList[0],
-                              paramList[1],
-                              paramList[8],
-                              paramList[9],
-                              paramList[14],
-                              paramList[15],
-                              paramList[21],
-                              paramList[22],
-                            ],
-                            title: 'Fore Limb',
-                          ),
-                          Limb(
-                            paramNames: const [
-                              "Avg Limb Length",
-                              "Avg Leg Length",
-                              "Max Limb Length",
-                              "Max Leg Length",
-                              "Min Limb Length",
-                              "Min Leg Length",
-                              "STD Limb Length",
-                              "STD Leg Length",
-                            ],
-                            paramValues: [
-                              paramList[0],
-                              paramList[1],
-                              paramList[8],
-                              paramList[9],
-                              paramList[14],
-                              paramList[15],
-                              paramList[21],
-                              paramList[22],
-                            ],
-                            title: 'Fore Limb 2',
-                          ),
-                          Limb(
-                            paramNames: const [
-                              "Avg Limb Length",
-                              "Avg Leg Length",
-                              "Max Limb Length",
-                              "Max Leg Length",
-                              "Min Limb Length",
-                              "Min Leg Length",
-                              "STD Limb Length",
-                              "STD Leg Length",
-                            ],
-                            paramValues: [
-                              paramList[0],
-                              paramList[1],
-                              paramList[8],
-                              paramList[9],
-                              paramList[14],
-                              paramList[15],
-                              paramList[21],
-                              paramList[22],
-                            ],
-                            title: 'Fore Limb 3',
-                          ),
-                        ],
+                      child: ListView.builder(
+                        itemCount: (numWidgets / widgetsPerRow).ceil(),
+                        itemBuilder: (BuildContext context, int index) {
+                          int startIndex = index * widgetsPerRow;
+                          int endIndex = (index + 1) * widgetsPerRow;
+                          endIndex =
+                              endIndex >= numWidgets ? numWidgets : endIndex;
+
+                          return Wrap(
+                            spacing: 8.0,
+                            alignment: WrapAlignment.center,
+                            children: confParamWidgetList.sublist(
+                                startIndex, endIndex),
+                          );
+                        },
                       ),
                     );
                   } else if (index == 2) {
