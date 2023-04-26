@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'parameter.dart';
+import 'parameters/parameter.dart';
 
 class ParameterList extends StatelessWidget {
   const ParameterList({super.key});
