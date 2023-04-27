@@ -1,8 +1,13 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'parameter.dart';
+import 'parameters/parameter.dart';
 
 class ParameterList extends StatelessWidget {
-  const ParameterList({super.key});
+  ParameterList({super.key});
+
+  final bool isWebMobile = kIsWeb &&
+      (defaultTargetPlatform == TargetPlatform.iOS ||
+          defaultTargetPlatform == TargetPlatform.android);
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +45,9 @@ class ParameterList extends StatelessWidget {
     ];
 
     int widgetsPerRow = 3;
+    if (isWebMobile) {
+      widgetsPerRow = 2;
+    }
 
     return ListView.builder(
       itemCount: (widgets.length / widgetsPerRow).ceil(),
@@ -50,7 +58,7 @@ class ParameterList extends StatelessWidget {
 
         return Wrap(
           spacing: 8.0,
-          alignment: WrapAlignment.center,
+          alignment: WrapAlignment.spaceEvenly,
           children: widgets.sublist(startIndex, endIndex),
         );
       },
