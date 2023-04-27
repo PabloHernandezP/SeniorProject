@@ -1,14 +1,12 @@
 import 'package:equine_ai/controllers/filter_controller.dart';
 import 'package:equine_ai/pages/dashboard/widgets/parameter_list.dart';
-import 'package:equine_ai/pages/dashboard/widgets/parameters/limb.dart';
+import 'package:equine_ai/pages/dashboard/widgets/parameters/conformation.dart';
 import 'package:equine_ai/styles/dashboard_styles.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../controllers/global_state_management.dart';
-import '../../profile/widgets/equine_profile.dart';
-import 'conformation_list.dart';
 
 class DashboardBody extends StatefulWidget {
   const DashboardBody({Key? key}) : super(key: key);
@@ -176,7 +174,7 @@ class _DashboardBodyState extends State<DashboardBody> {
                   } else if (index == 1) {
                     List<double> paramList = parameters.toList();
                     List<Widget> confParamWidgetList = [
-                      Limb(
+                      Conformation(
                         paramNames: const [
                           "Avg Limb Length",
                           "Avg Leg Length",
@@ -199,7 +197,7 @@ class _DashboardBodyState extends State<DashboardBody> {
                         ],
                         title: 'Fore Limb',
                       ),
-                      Limb(
+                      Conformation(
                         paramNames: const [
                           "Avg Limb Length",
                           "Avg Leg Length",
@@ -211,53 +209,70 @@ class _DashboardBodyState extends State<DashboardBody> {
                           "STD Leg Length",
                         ],
                         paramValues: [
-                          paramList[0],
-                          paramList[1],
-                          paramList[8],
-                          paramList[9],
-                          paramList[14],
-                          paramList[15],
-                          paramList[21],
-                          paramList[22],
+                          paramList[3],
+                          paramList[4],
+                          paramList[10],
+                          paramList[11],
+                          paramList[17],
+                          paramList[18],
+                          paramList[24],
+                          paramList[25],
                         ],
-                        title: 'Fore Limb 2',
+                        title: 'Hind Limb',
                       ),
-                      Limb(
+                      Conformation(
                         paramNames: const [
-                          "Avg Limb Length",
-                          "Avg Leg Length",
-                          "Max Limb Length",
-                          "Max Leg Length",
-                          "Min Limb Length",
-                          "Min Leg Length",
-                          "STD Limb Length",
-                          "STD Leg Length",
+                          "Avg Head Length",
+                          "Avg Neck Length",
+                          "Max Head Length",
+                          "Max Neck Length",
+                          "Min Head Length",
+                          "Min Neck Length",
+                          "STD Head Length",
+                          "STD Neck Length",
                         ],
                         paramValues: [
-                          paramList[0],
-                          paramList[1],
-                          paramList[8],
+                          paramList[2],
+                          paramList[5],
                           paramList[9],
-                          paramList[14],
-                          paramList[15],
-                          paramList[21],
-                          paramList[22],
+                          paramList[12],
+                          paramList[16],
+                          paramList[19],
+                          paramList[23],
+                          paramList[26],
                         ],
-                        title: 'Fore Limb 3',
+                        title: 'Head and Neck',
+                      ),
+                      Conformation(
+                        paramNames: const [
+                          "Avg Length",
+                          "Max Length",
+                          "Min Length",
+                          "STD Length",
+                        ],
+                        paramValues: [
+                          paramList[6],
+                          paramList[13],
+                          paramList[20],
+                          paramList[27],
+                        ],
+                        title: 'Shank',
                       ),
                     ];
-                    int widgetsPerRow = 3;
-                    int numWidgets = 3;
+
+                    int widgetsPerRow = 2;
 
                     return SizedBox(
                       height: MediaQuery.of(context).size.height / 2,
                       child: ListView.builder(
-                        itemCount: (numWidgets / widgetsPerRow).ceil(),
+                        itemCount:
+                            (confParamWidgetList.length / widgetsPerRow).ceil(),
                         itemBuilder: (BuildContext context, int index) {
                           int startIndex = index * widgetsPerRow;
                           int endIndex = (index + 1) * widgetsPerRow;
-                          endIndex =
-                              endIndex >= numWidgets ? numWidgets : endIndex;
+                          endIndex = endIndex >= confParamWidgetList.length
+                              ? confParamWidgetList.length
+                              : endIndex;
 
                           return Wrap(
                             spacing: 8.0,

@@ -3,12 +3,12 @@ import 'package:equine_ai/styles/dashboard_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 
-class Limb extends StatelessWidget {
+class Conformation extends StatelessWidget {
   final String title;
   final List<String> paramNames;
   final List<double> paramValues;
 
-  const Limb({
+  const Conformation({
     Key? key,
     required this.paramNames,
     required this.paramValues,
@@ -50,40 +50,12 @@ class Limb extends StatelessWidget {
                 child: FastFacts(
                   chartHeight: maxHeight - 100,
                   chartWidth: maxWidth - 100,
-                  facts: [
-                    [
-                      paramNames[0],
-                      paramValues[0].toStringAsFixed(decimalPlaces)
-                    ],
-                    [
-                      paramNames[1],
-                      paramValues[1].toStringAsFixed(decimalPlaces)
-                    ],
-                    [
-                      paramNames[2],
-                      paramValues[2].toStringAsFixed(decimalPlaces)
-                    ],
-                    [
-                      paramNames[3],
-                      paramValues[3].toStringAsFixed(decimalPlaces)
-                    ],
-                    [
-                      paramNames[4],
-                      paramValues[4].toStringAsFixed(decimalPlaces)
-                    ],
-                    [
-                      paramNames[5],
-                      paramValues[5].toStringAsFixed(decimalPlaces)
-                    ],
-                    [
-                      paramNames[6],
-                      paramValues[6].toStringAsFixed(decimalPlaces)
-                    ],
-                    [
-                      paramNames[7],
-                      paramValues[7].toStringAsFixed(decimalPlaces)
-                    ],
-                  ],
+                  facts: List.generate(paramNames.length, (index) {
+                    return [
+                      paramNames[index],
+                      paramValues[index].toStringAsFixed(decimalPlaces),
+                    ];
+                  }),
                 ),
               ),
             ],
