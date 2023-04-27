@@ -3,6 +3,7 @@ import 'package:equine_ai/pages/dashboard/widgets/parameter_list.dart';
 import 'package:equine_ai/pages/dashboard/widgets/parameters/conformation.dart';
 import 'package:equine_ai/styles/dashboard_styles.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -52,6 +53,10 @@ class _DashboardBodyState extends State<DashboardBody> {
 
   String? selectedHorse;
   final Set<double> parameters = {};
+
+  final bool isWebMobile = kIsWeb &&
+      (defaultTargetPlatform == TargetPlatform.iOS ||
+          defaultTargetPlatform == TargetPlatform.android);
 
   Future<void> _loadParameters() async {
     DatabaseReference historyRef = databaseReference
@@ -260,7 +265,10 @@ class _DashboardBodyState extends State<DashboardBody> {
                       ),
                     ];
 
-                    int widgetsPerRow = 2;
+                    int widgetsPerRow = 3;
+                    if (isWebMobile) {
+                      widgetsPerRow = 2;
+                    }
 
                     return SizedBox(
                       height: MediaQuery.of(context).size.height / 2,
@@ -276,7 +284,7 @@ class _DashboardBodyState extends State<DashboardBody> {
 
                           return Wrap(
                             spacing: 8.0,
-                            alignment: WrapAlignment.center,
+                            alignment: WrapAlignment.spaceEvenly,
                             children: confParamWidgetList.sublist(
                                 startIndex, endIndex),
                           );
@@ -294,7 +302,7 @@ class _DashboardBodyState extends State<DashboardBody> {
                   } else if (index == 3) {
                     return SizedBox(
                       height: MediaQuery.of(context).size.height / 2,
-                      child: const ParameterList(),
+                      child: ParameterList(),
                     );
                   }
                 },
